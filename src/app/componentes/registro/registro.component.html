@@ -1,0 +1,121 @@
+<!-- <form [formGroup]="registroForm" (ngSubmit)="onSubmit()" class="registro-form"> -->
+  <form *ngIf="!completed" [formGroup]="registroForm" (ngSubmit)="onSubmit()" class="registro-form">
+  <div class="user-type">
+    <label>
+      <input type="radio" formControlName="tipoUsuario" value="paciente" (change)="onTipoUsuarioChange()" />
+      Paciente
+    </label>
+    <label>
+      <input type="radio" formControlName="tipoUsuario" value="especialista" (change)="onTipoUsuarioChange()" />
+      Especialista
+    </label>
+  </div>
+
+  <!-- Datos comunes -->
+  <div class="form-group">
+    <label>Nombre:</label>
+    <input formControlName="nombre" type="text" placeholder="Nombre" />
+    <div class="error-message" *ngIf="(registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched) || (submitted && registroForm.get('nombre')?.invalid)">
+      Nombre es requerido.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Apellido:</label>
+    <input formControlName="apellido" type="text" placeholder="Apellido" />
+    <div class="error-message" *ngIf="(registroForm.get('apellido')?.invalid && registroForm.get('apellido')?.touched) || (submitted && registroForm.get('apellido')?.invalid)">
+      Apellido es requerido.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Edad:</label>
+    <input formControlName="edad" type="number" placeholder="Edad" />
+    <div class="error-message" *ngIf="(registroForm.get('edad')?.invalid && registroForm.get('edad')?.touched) || (submitted && registroForm.get('edad')?.invalid)">
+      Edad válida es requerida.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>DNI:</label>
+    <input formControlName="dni" type="text" placeholder="DNI" />
+    <div class="error-message" *ngIf="(registroForm.get('dni')?.invalid && registroForm.get('dni')?.touched) || (submitted && registroForm.get('dni')?.invalid)">
+      DNI es requerido.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Email:</label>
+    <input formControlName="email" type="email" placeholder="Email" />
+    <div class="error-message" *ngIf="(registroForm.get('email')?.invalid && registroForm.get('email')?.touched) || (submitted && registroForm.get('email')?.invalid)">
+      Se requiere un email válido.
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label>Contraseña:</label>
+    <input formControlName="password" type="password" placeholder="Contraseña" />
+    <div class="error-message" *ngIf="(registroForm.get('password')?.invalid && registroForm.get('password')?.touched) || (submitted && registroForm.get('password')?.invalid)">
+      La contraseña es requerida y debe tener al menos 6 caracteres.
+    </div>
+  </div>
+
+  
+  <!-- Si es paciente se piden estos datos adicionales -->
+  <div *ngIf="isPaciente">
+    <div class="form-group">
+      <label>Obra Social:</label>
+      <input formControlName="obraSocial" type="text" placeholder="Obra Social" />
+      <div class="error-message" *ngIf="(registroForm.get('obraSocial')?.invalid && registroForm.get('obraSocial')?.touched) || (submitted && registroForm.get('obraSocial')?.invalid)">
+        Obra Social es requerida.
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Imagen 1:</label>
+      <input type="file" (change)="onFileSelect($event, 'imagen1')" />
+    </div>
+    <div class="form-group">
+      <label>Imagen 2:</label>
+      <input type="file" (change)="onFileSelect($event, 'imagen2')" />
+    </div>
+  </div>
+
+
+  <!-- Si es especialista se piden estos datos -->
+  <div *ngIf="isEspecialista">
+    <div class="form-group">
+      <label>Especialidad:</label>
+      <select formControlName="especialidad">
+        <option *ngFor="let especialidad of especialidades" [value]="especialidad">{{ especialidad }}</option>
+      </select>
+      <input type="text" formControlName="nuevaEspecialidad" placeholder="Agregar nueva especialidad" />
+      <button type="button" (click)="agregarEspecialidad()">Agregar</button>
+    </div>
+    <div class="form-group">
+      <label>Imagen de perfil:</label>
+      <input type="file" (change)="onFileSelect($event, 'imagenPerfil')" />
+    </div>
+  </div>
+  
+  
+  <!-- <button type="submit" [disabled]="registroForm.invalid" class="submit-button">Registrarse</button> -->
+  <button type="submit" class="submit-button">Registrarse</button>
+  
+</form>
+
+
+  
+  <!-- Overlay del spinner que aparece en el centro -->
+  <div *ngIf="isLoading" class="spinner-overlay">
+    <div class="spinner"></div>
+    <!-- <p>Enviando encuesta...</p> -->
+  </div>
+  
+  
+  <div *ngIf="completed" class="confirmation-message" style="text-align: center; color: green;">
+    <p>😊 Formulario enviado correctamente. ¡Registro terminado! 😊</p>
+  </div>
+  
+  <p *ngIf="submitted && registroForm.invalid" class="error-message">
+    Por favor completa todos los campos obligatorios.
+  </p>

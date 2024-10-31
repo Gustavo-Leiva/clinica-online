@@ -1,0 +1,191 @@
+/* Reset de estilos básicos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+  }
+  
+  /* Estilos para el navbar */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1f2937; /* Fondo oscuro */
+    padding: 1rem 2rem;
+    color: #f9fafb;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra elegante */
+  }
+  
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-logo .logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 0.8rem;
+    border-radius: 50%; /* Para darle un estilo circular al logo */
+  }
+  
+  .navbar-logo span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e5e7eb;
+  }
+  
+  .navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .navbar-links a {
+    text-decoration: none;
+    color: #e5e7eb;
+    font-weight: 500;
+    padding: 0.5rem;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-radius: 8px;
+  }
+  
+  .navbar-links a:hover {
+    color: #1f2937;
+    background-color: #f3f4f6; /* Fondo claro al hacer hover */
+  }
+  
+  .navbar-auth {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .btn {
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px; /* Bordes redondeados */
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .btn.login, .btn.register  {
+  
+    background-color: #d90429;
+    color: white;
+  }
+  
+
+  
+  .btn:hover {
+    background-color: #ef233c;
+    color: white;
+    transform: scale(1.05); /* Pequeño efecto de zoom */
+  }
+
+
+
+
+  
+/* info */
+
+/* Estilo para el contenedor .info */
+.info {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* Ajustes en los .card */
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+  padding: 10px;
+  background-color: #edf2f4;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid #2b2d42;
+}
+
+.card:last-child {
+  margin-right: 10px;
+}
+.card i {
+  font-size: 30px;
+  color: #2b2d42;
+  margin-bottom: 5px;
+}
+.card h2 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+.card p {
+  font-size: 12px;
+}
+
+/* about us */
+.about-us {
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 40px;
+}
+.about-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0.1, 0.1, 0.1, 0.1);
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.about-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+.about-item img {
+  width: 350px;
+  height: 260px;
+  border-radius: 10px;
+}
+.about-item h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+.about-item p {
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+  
+/* Estilo para el contenedor de la imagen de fondo */
+.home-image-container {
+  position: relative;
+  text-align: center;
+}
+
+.home-image {
+  width: 100%; /* Ocupa todo el ancho de la página */
+  max-height: 600px; /* Establece un límite máximo para la altura */
+  height: auto; /* Permite que la altura se ajuste automáticamente */
+  object-fit: cover; /* Ajusta la imagen para llenar el contenedor sin distorsionarse */
+  object-position: center; /* Centra la imagen dentro del contenedor */
+ 
+}
