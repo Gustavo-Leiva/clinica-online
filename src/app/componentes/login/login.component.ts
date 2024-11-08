@@ -20,6 +20,24 @@ export class LoginComponent {
   flagError: boolean = false;
   msjError: string = '';
   isLoading: boolean = false;
+   // Declara la propiedad userProfileImageUrl
+   userProfileImageUrl: string = 'path-to-default-profile-image.jpg'; // Puedes poner una imagen predeterminada o la URL de la imagen del perfil
+
+  
+
+
+  userListVisible: boolean = false;  // Estado para mostrar u ocultar los usuarios
+  users = [
+    { id: 1, name: 'Administrador', role: 'admin', image: 'path-to-admin.jpg' },
+    { id: 2, name: 'Especialista 1', role: 'especialista', image: 'path-to-especialista1.jpg' },
+    { id: 3, name: 'Especialista 2', role: 'especialista', image: 'path-to-especialista2.jpg' },
+    { id: 4, name: 'Paciente 1', role: 'paciente', image: 'path-to-paciente1.jpg' },
+    { id: 5, name: 'Paciente 2', role: 'paciente', image: 'path-to-paciente2.jpg' },
+    { id: 6, name: 'Paciente 3', role: 'paciente', image: 'path-to-paciente3.jpg' }
+  ];
+
+  usuario = { email: '', password: '' };
+
 
   constructor(private router: Router, private auth: AuthService) {}
   async LoginUser() {
@@ -74,7 +92,82 @@ export class LoginComponent {
       this.isLoading = false;
     }
   }
+
+
+
+  // Método para alternar la visibilidad de la lista de usuarios
+  toggleUserList(): void {
+    this.userListVisible = !this.userListVisible;
+  }
+
+  // Método que se llama al hacer clic en un usuario
+  onUserClick(user: any): void {
+    this.accesoRapido(user.id);
+    console.log('Usuario seleccionado:', user.name);
+
+    // Puedes redirigir o realizar alguna acción según el tipo de usuario
+    if (user.role === 'admin') {
+      this.router.navigate(['/admin-dashboard']);
+    } else if (user.role === 'especialista') {
+      this.router.navigate(['/especialista-dashboard']);
+    } else if (user.role === 'paciente') {
+      this.router.navigate(['/paciente-dashboard']);
+    }
+  }
+
+
+ accesoRapido(numero: number) {
+    switch (numero) {
+      case 1:
+        this.usuario.email = 'administrador@utn.com';
+        this.usuario.password = 'admin123';
+        break;
+      case 2:
+        this.usuario.email = 'especialista@especialista.com';
+        this.usuario.password = 'especialista';
+        break;
+      case 3:
+        this.usuario.email = 'erling@haaland.com';
+        this.usuario.password = '123456';
+        break;
+      case 4:
+        this.usuario.email = 'paciente@paciente.com';
+        this.usuario.password = 'paciente';
+        break;
+      case 5:
+        this.usuario.email = 'kylianmbappe@gmail.com';
+        this.usuario.password = '123456';
+        break;
+      case 6:
+        this.usuario.email = 'juanromanriquelme@gmail.com';
+        this.usuario.password = '123456';
+        break;
+      default:
+        console.log('Número de ingreso rápido no válido');
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }  
+
+
+
 
   // UsuarioPaciente() {
   //   this.email = 'paciente@gmail.com';

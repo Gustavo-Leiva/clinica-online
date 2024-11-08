@@ -15,12 +15,31 @@ export class AuthService {
   private actualUserSubject = new BehaviorSubject<Usuario | null>(null);
   public actualUser$ = this.actualUserSubject.asObservable();
 
+  // constructor(private auth: Auth, private firestore: Firestore, private router: Router) {
+  //   onAuthStateChanged(this.auth, (user) => {
+  //     if (user) {
+  //       this.userActive = user;
+  //       const usuario: Usuario = this.mapUserToUsuario(user); // Convierte el User en un Usuario
+  //       this.actualUserSubject.next(usuario); // Actualiza el estado con el tipo correcto
+  //     } else {
+  //       this.userActive = null;
+  //       this.actualUserSubject.next(null);
+  //     }
+  //   });
+  // }
+
+
   constructor(private auth: Auth, private firestore: Firestore, private router: Router) {
-    onAuthStateChanged(this.auth, (user) => {
+    onAuthStateChanged(this.auth, async (user) => {
       if (user) {
         this.userActive = user;
-        const usuario: Usuario = this.mapUserToUsuario(user); // Convierte el User en un Usuario
-        this.actualUserSubject.next(usuario); // Actualiza el estado con el tipo correcto
+        const perfilUsuario = await this.obtenerPerfilUsuario(user.uid); // Obtenemos el perfil desde Firestore
+        if (perfilUsuario) {
+          this.actualUserSubject.next(perfilUsuario); // Actualizamos el usuario en el Subject
+        } else {
+          console.error('Perfil no encontrado en Firestore');
+          this.actualUserSubject.next(null);
+        }
       } else {
         this.userActive = null;
         this.actualUserSubject.next(null);
@@ -145,7 +164,7 @@ mostrarErrorLogin(codigoError: string): string {
 }
 
 
-  
+  // Obtener el perfil del usuario desde Firestore
   async obtenerPerfilUsuario(uid: string): Promise<Usuario | null> {
     console.log('Obteniendo perfil de usuario con UID:', uid);
     const userRef = doc(this.firestore, `usuarios/${uid}`);

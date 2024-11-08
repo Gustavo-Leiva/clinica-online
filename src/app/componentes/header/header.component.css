@@ -47,20 +47,7 @@
     gap: 1.5rem;
   }
   
-  .navbar-links a {
-    text-decoration: none;
-    color: #e5e7eb;
-    font-weight: 500;
-    padding: 0.5rem;
-    transition: color 0.3s ease, background-color 0.3s ease;
-    border-radius: 8px;
-  }
-  
-  .navbar-links a:hover {
-    color: #1f2937;
-    background-color: #f3f4f6; /* Fondo claro al hacer hover */
-  }
-  
+
   .navbar-auth {
     display: flex;
     gap: 1rem;
@@ -71,10 +58,16 @@
     padding: 0.5rem 1rem;
     border-radius: 20px; /* Bordes redondeados */
     font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+   
   }
   
-  .btn.login, .btn.register, .btn.inicio  {
+  .btn.login, 
+  .btn.register, 
+  .btn.inicio, 
+  .btn.salir, 
+  .btn.informes, 
+  .btn.perfil, 
+  .btn.btn.admin {
   
     /* background: linear-gradient(135deg, #6a1b9a, #ec0584); Gradiente de morado a rosa */
     background: linear-gradient(135deg, #38b6ff, #43d1af);
@@ -82,23 +75,31 @@
     padding: 10px 20px;
     font-size: 1rem;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
-    transition: background 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
   }
   
 
   
-  .btn:hover {
+  /*no uso este hover porque ya lo uso en la directiva*/
+  /* .btn:hover {
     background-color: #ef233c;
     color: white;
-    transform: scale(1.05); /* Pequeño efecto de zoom */
-  }
+    transform: scale(1.05);  Pequeño efecto de zoom 
+  } 
+  */
 
-  .btn.login:hover, .btn.register:hover, .btn.inicio:hover {
-    /*background: linear-gradient(135deg, #ec0584, #6a1b9a);  Inversión del gradiente al pasar el mouse */
+  .btn.login:hover, 
+  .btn.register:hover, 
+  .btn.inicio:hover, 
+  .btn.btn.salir:hover,
+  .btn.btn.informes:hover,
+  .btn.btn.perfil:hover, 
+  .btn.btn.admin:hover
+  {
     background: linear-gradient(135deg, #43d1af, #38b6ff); /* Inversión del gradiente */
-    transform: translateY(-2px); /* Efecto de elevación al pasar el mouse */
+    /* transform: translateY(-2px); Efecto de elevación al pasar el mouse */
 }
 
 .swal-popup {

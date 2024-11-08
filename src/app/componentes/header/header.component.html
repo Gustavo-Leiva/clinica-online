@@ -1,40 +1,68 @@
 <header>
+  <nav class="navbar">
 
-<nav class="navbar">
-
-   <!-- Contenido del usuario logueado -->
-   <div *ngIf="usuarioLogueado">
-    <div class="profile-picture">
-      <img *ngIf="usuarioLogueado && isPaciente(usuarioLogueado)" [src]="usuarioLogueado.fotoPerfil1" alt="Foto de perfil">
-      <span *ngIf="usuarioLogueado && !isPaciente(usuarioLogueado)" class="no-photo">Sin foto</span>
+    <!-- Contenido del usuario logueado -->
+    <div appExpandirHover *ngIf="usuarioLogueado">
+      <div class="profile-picture">
+        <img *ngIf="usuarioLogueado && isPaciente(usuarioLogueado)" [src]="usuarioLogueado.fotoPerfil1"
+          alt="Foto de perfil" />
+        <span *ngIf="usuarioLogueado && !isPaciente(usuarioLogueado)" class="no-photo">Sin foto</span>
+      </div>
+      <h3>
+        {{ usuarioLogueado.nombre}} {{usuarioLogueado.apellido}}
+        {{ usuarioLogueado.tipoUsuario | iconosUsuario }}
+      </h3>
     </div>
-    <h3>{{ usuarioLogueado.nombre }} {{ usuarioLogueado.apellido }} {{ usuarioLogueado.tipoUsuario | iconosUsuario }}</h3>
-  </div>
 
-    <div class="navbar-logo">
+    <div appExpandirHover class="navbar-logo">
       <img src="assets/imagenes/logo.jfif" alt="Logo Clínica" class="logo" />
       <span>Clínica Salud</span>
     </div>
 
     <ul class="navbar-links">
-      <!-- <li><a href="#inicio">Inicio</a></li>
-      <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#pacientes">Pacientes</a></li>
-      <li><a href="#especialistas">Especialistas</a></li>
-      <li><a href="#contacto">Contacto</a></li> -->
-    </ul>
+      <div class="navbar-auth">
+        <li appExpandirHover>
+          <a href="#" class="btn inicio">
+            <strong> 🏠 Inicio</strong>
+          </a>
+        </li>
 
-    <div class="navbar-auth">
-      <a href="#" class="btn inicio">
-        <strong> 🏠 Inicio</strong>
-      </a>
-      <a href="/login" class="btn login">
-        <strong> 📤 Ingresar</strong> 
-      </a>
-      <a href="/registro" class="btn register"> 
-         <strong> 📝 Registrarse</strong>
-      </a>
-    </div>
+        <li *ngIf="!usuarioLogueado" appExpandirHover>
+          <a href="/login" class="btn login">
+            <strong> 📤 Ingresar</strong>
+          </a>
+        </li>
+
+        <li  *ngIf="!usuarioLogueado" appExpandirHover>
+          <a href="/registro" class="btn register">
+            <strong> 📝 Registrarse</strong>
+          </a>
+        </li>
+
+        <li *ngIf="usuarioLogueado?.tipoUsuario == 'administrador'" appExpandirHover >
+          <a routerLink="/perfil" class="btn perfil">
+            <strong> 🧑 Mi Perfil</strong>     
+          </a>
+        </li>
+
+        <li *ngIf="usuarioLogueado?.tipoUsuario == 'administrador'" appExpandirHover >
+          <a routerLink="/infomes" class="btn informes">
+            <strong> 📊 Informes</strong>     
+          </a>
+        </li>
+
+        <li *ngIf="usuarioLogueado?.tipoUsuario == 'administrador'" appExpandirHover >
+          <a routerLink="/panelAdmin" class="btn admin">
+            <strong> 💎 Admin </strong>     
+          </a>
+        </li>
+
+        <li appExpandirHover>
+          <a *ngIf="usuarioLogueado" (click)="logout()" routerLink="" class="btn salir">
+            <strong> 👤❌ Salir</strong>
+          </a>
+        </li>
+      </div>
+    </ul>
   </nav>
-  
 </header>

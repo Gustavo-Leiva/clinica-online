@@ -4,12 +4,13 @@ import { AuthService } from '../../services/auth.service';
 import swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { IconosUsuarioPipe} from '../../pipes/iconos-usuario.pipe';
+import { ExpandirHoverDirective } from '../../directivas/expandir-hover.directive';
 
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, IconosUsuarioPipe],
+  imports: [CommonModule, IconosUsuarioPipe, ExpandirHoverDirective],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
@@ -20,6 +21,7 @@ export class HeaderComponent  implements OnInit {
 
   ngOnInit(): void {
     this.authService.actualUser$.subscribe((user) => {
+      console.log(user); // Aquí podrás ver si el usuario tiene los datos correctos
       this.usuarioLogueado = user;
     });
   }
