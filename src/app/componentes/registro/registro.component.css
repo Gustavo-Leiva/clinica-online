@@ -1,148 +1,142 @@
-.registro-form {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: #f8f9fa;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
+/* Agrega un estilo opcional para el fondo */
+body {
+    /* background-color:#ce1e1e; */
+    font-family: 'Arial', sans-serif; /* Tipo de fuente para todo el cuerpo */
+    /* width: 100%;
+    height: 100%; */
   }
   
-  .user-type {
-    display: flex;
-    justify-content: space-between;
+  .registro-container {
+    text-align: center;
+  }
+  
+  .registro-titulo {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #333;
     margin-bottom: 20px;
-  }
+    font-family: 'Arial', sans-serif;
+    font-family: 'Trebuchet MS';
+    color: #54BAB9;
+    letter-spacing: 1px;
+    }
+    
+    
   
-  .form-group {
+  
+  .role-selection {
     display: flex;
     flex-direction: column;
-    margin-bottom: 15px;
+    align-items: center;
+    gap: 20px;
   }
-  
-  .form-group label {
-    font-weight: bold;
-    color: #495057;
-    margin-bottom: 5px;
-  }
-  
-  .form-group input[type="text"],
-  .form-group input[type="email"],
-  .form-group input[type="number"],
-  .form-group input[type="password"],
-  .form-group input[type="file"],
-  .form-group select {
-    padding: 8px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    font-size: 14px;
-    color: #495057;
-    transition: border-color 0.3s;
-  }
-  
-  .form-group input:focus,
-  .form-group select:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-  
-  .error-message {
-    color: #e74c3c;
-    font-size: 12px;
-    margin-top: 5px;
-  }
-  
-  .add-button {
-    margin-top: 5px;
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .add-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .submit-button {
+    
+  .role-button {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: #f0f0f0;
+      border: 2px solid #ccc;
+      margin: 15px 0;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    
+    .role-button img {
+      width: 80%; /* Tamaño de la imagen dentro del botón */
+      height: 80%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+    
+    .role-button:hover {
+      transform: scale(1.05); /* Efecto de hover */
+      background-color: #e0e0e0; /* Color de fondo al pasar el cursor */
+    }
+    
+    /* Modal para mostrar el formulario centrado */
+  .form-modal {
+    position: fixed;
+    top: -20px;
+    left: 0;
     width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999; /* Ajusta el z-index del modal */
+    overflow-y: auto;
+    padding: 10px; /* Espacio adicional alrededor del formulario */
+  }
+  
+  /* Contenedor del formulario */
+  .form-content {
+    background-color: #fff;
     padding: 10px;
-    background-color: #28a745;
-    color: #fff;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    position: relative; /* Asegura que el botón de cierre se posicione relativo a este contenedor */
+  }
+  
+  /* Botón de cierre en la esquina superior derecha */
+  .close-button {
+    position: absolute;
+    margin-bottom: 475px;
+    margin-right: 660px;
+    width: 40px; /* Ancho del botón */
+    height: 40px; /* Alto del botón */
+    background-color:#54BAB9;; /* Color  de fondo del botón (puedes cambiarlo) */
+    color: white; /* Color del texto (la X) */
     border: none;
-    border-radius: 4px;
-    font-size: 16px;
+    border-radius: 50%; /* Hace que el botón sea redondo */
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center; /* Centra el texto dentro del botón */
+    align-items: center; /* Centra el texto dentro del botón */
     cursor: pointer;
-    transition: background-color 0.3s;
+    z-index: 9999; /* Asegura que esté por encima de otros elementos */
+    font-family: 'Trebuchet MS';
+   
   }
   
-  .submit-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+  
+   .close-button:hover {
+   
+    background-color:black; /* Color de fondo al pasar el cursor (puedes cambiarlo) */
+    color:#ff0000; /* Color del texto al pasar el cursor */
+    
+  
   }
   
-  .submit-button:hover:not(:disabled) {
-    background-color: #218838;
+  
+  
+   .close-button:hover {
+    color: #ff0000; /* Cambia el color al pasar el cursor */
+  
   }
   
-  .error-message {
-    color: #e74c3c;
-    font-size: 12px;
-    margin-top: 5px;
-}
-
-.confirmation-message {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: calc(100vh - 60px); /* Ajusta según tu diseño */
-  color: #28a745;
-  font-size: 14px;
-  text-align: center;
-  margin-top: 15px;
-  font-weight: bold;
-}
-
-
-
-.confirmation-message p {
-  margin: 0; /* Eliminar márgenes del párrafo */
-}
-
-
-.submit-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-/* spinner */
-.spinner-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000; /* Para que aparezca sobre todos los elementos */
-}
-
-.spinner {
-  border: 8px solid rgba(255, 255, 255, 0.3);
-  border-top: 8px solid #ffffff;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+  .confirmation-message {
+    position: fixed; /* Cubre toda la pantalla */
+    top: 50%; /* Coloca el mensaje en el medio */
+    left: 50%; /* Coloca el mensaje en el medio */
+    transform: translate(-50%, -50%); /* Centra el mensaje */
+    background: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+    font-size: 1.5rem; /* Tamaño de fuente */
+    color: #333; /* Color del texto */
+    text-align: center; /* Alinear el texto al centro */
+    z-index: 1200; /* Asegúrate de que esté por encima de todo */
+  }
+  
