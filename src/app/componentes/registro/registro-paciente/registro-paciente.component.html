@@ -108,6 +108,12 @@
               La imagen de perfil 2 es obligatoria.
           </div>
       </div>
+
+       <!-- Mensaje de error -->
+    <div *ngIf="msjError" class="error-message">
+        {{ msjError }}
+    </div>
+
       
       <button type="submit" class="submit-btn">Registrar Paciente</button>
 

@@ -102,6 +102,7 @@ body {
   }
   
   .fav-button {
+    
     background-color: #007bff;
     border: none;
     border-radius: 50%;
@@ -120,17 +121,22 @@ body {
   }
   
   .fav-button-img {
+    
     width: 40px;
     height: 40px;
     border-radius: 50%;
   }
   
-  .user-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
-  }
+ /* Estilo para la lista de usuarios desplegable hacia arriba */
+.user-list {
+  display: flex;
+  flex-direction: column-reverse; /* Despliega hacia arriba */
+  gap: 10px;
+  position: absolute;
+  bottom: 70px; /* Coloca la lista justo encima del botón */
+  right: 0;
+}
+
   
   .user-item {
     display: flex;

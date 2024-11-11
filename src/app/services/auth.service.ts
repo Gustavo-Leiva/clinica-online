@@ -247,12 +247,21 @@ async registrarUsuario(usuario: Usuario, password: string) {
 
     return res.user;
   } catch (e: any) {
-    console.error('Error al registrar usuario:', e);
+    // console.error('Error al registrar usuario:', e);
 
     // Llamada al método mostrarErrorRegistro
-    this.msjError = this.mostrarErrorRegistro(e.code); 
+    // this.msjError = this.mostrarErrorRegistro(e.code); 
 
-    throw new Error(this.msjError); // Lanza el error con el mensaje adecuado
+    // throw new Error(this.msjError);  Lanza el error con el mensaje adecuado
+  
+    console.error('Error al registrar usuario:', e); // Esto imprimirá el objeto de error completo
+
+    // Verificar si el error es de Firebase y contiene un código
+    let errorCode = e?.code || 'error-desconocido';
+    this.msjError = this.mostrarErrorRegistro(errorCode); // Asigna el mensaje de error
+    
+     // Lanza el error con el mensaje adecuado
+    throw new Error(this.msjError);
   }
 }
 

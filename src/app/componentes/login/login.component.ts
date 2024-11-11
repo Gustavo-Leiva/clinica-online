@@ -21,19 +21,19 @@ export class LoginComponent {
   msjError: string = '';
   isLoading: boolean = false;
    // Declara la propiedad userProfileImageUrl
-   userProfileImageUrl: string = 'path-to-default-profile-image.jpg'; // Puedes poner una imagen predeterminada o la URL de la imagen del perfil
+   userProfileImageUrl: string = '/assets/imagenes/favbutton.png'; // Puedes poner una imagen predeterminada o la URL de la imagen del perfil
 
   
 
 
   userListVisible: boolean = false;  // Estado para mostrar u ocultar los usuarios
   users = [
-    { id: 1, name: 'Administrador', role: 'admin', image: 'path-to-admin.jpg' },
-    { id: 2, name: 'Especialista 1', role: 'especialista', image: 'path-to-especialista1.jpg' },
-    { id: 3, name: 'Especialista 2', role: 'especialista', image: 'path-to-especialista2.jpg' },
-    { id: 4, name: 'Paciente 1', role: 'paciente', image: 'path-to-paciente1.jpg' },
-    { id: 5, name: 'Paciente 2', role: 'paciente', image: 'path-to-paciente2.jpg' },
-    { id: 6, name: 'Paciente 3', role: 'paciente', image: 'path-to-paciente3.jpg' }
+    { id: 1, name: 'Administrador', role: 'administrador', image: '/assets/imagenes/perfiles/administrador-perfil.jpg' },
+    { id: 2, name: 'Especialista 1', role: 'especialista', image: '/assets/imagenes/perfiles/especialista-perfil-1.jpg' },
+    { id: 3, name: 'Especialista 2', role: 'especialista', image: '/assets/imagenes/perfiles/especialista-perfil-2.jpg' },
+    { id: 4, name: 'Paciente 1', role: 'paciente', image: '/assets/imagenes/perfiles/paciente-perfil -1.webp' },
+    { id: 5, name: 'Paciente 2', role: 'paciente', image: '/assets/imagenes/perfiles/paciente-perfil-2.jpg' },
+    { id: 6, name: 'Paciente 3', role: 'paciente', image: '/assets/imagenes/perfiles/paciente-perfil-3.jpg' }
   ];
 
   usuario = { email: '', password: '' };
@@ -106,41 +106,60 @@ export class LoginComponent {
     console.log('Usuario seleccionado:', user.name);
 
     // Puedes redirigir o realizar alguna acción según el tipo de usuario
-    if (user.role === 'admin') {
-      this.router.navigate(['/admin-dashboard']);
-    } else if (user.role === 'especialista') {
-      this.router.navigate(['/especialista-dashboard']);
-    } else if (user.role === 'paciente') {
-      this.router.navigate(['/paciente-dashboard']);
-    }
+    // if (user.role === 'administrador') {
+    //   this.router.navigate(['/home']);
+    // } else if (user.role === 'especialista') {
+    //   this.router.navigate(['/home']);
+    // } else if (user.role === 'paciente') {
+    //   this.router.navigate(['/home']);
+    // }
   }
 
 
  accesoRapido(numero: number) {
     switch (numero) {
       case 1:
-        this.usuario.email = 'administrador@utn.com';
-        this.usuario.password = 'admin123';
+        /*admin */
+        this.email = 'mipeso9543@opposir.com';
+        this.password = '123456';
+        // this.usuario.email = 'yohija6461@operades.com';
+        // this.usuario.password = '123456';
         break;
       case 2:
-        this.usuario.email = 'especialista@especialista.com';
-        this.usuario.password = 'especialista';
+      /*especialista1*/
+      
+      this.email = 'dinab63950@inikale.com';
+      this.password = '123456';
+        // this.usuario.email = 'dinab63950@inikale.com';
+        // this.usuario.password = '123456';
         break;
       case 3:
-        this.usuario.email = 'erling@haaland.com';
-        this.usuario.password = '123456';
+        /*especialista2*/
+        this.email = 'repeb23606@lineacr.com';
+        this.password = '123456';
+        // this.usuario.email = 'repeb23606@lineacr.com';
+        // this.usuario.password = '123456';
         break;
       case 4:
-        this.usuario.email = 'paciente@paciente.com';
-        this.usuario.password = 'paciente';
+        /*paciente 1 ok */
+        this.email = 'pehab70923@lineacr.com';
+        this.password = '123456';
+        // this.usuario.email = 'paciente@paciente.com';
+        // this.usuario.password = 'paciente';
         break;
       case 5:
-        this.usuario.email = 'kylianmbappe@gmail.com';
-        this.usuario.password = '123456';
+        /*paciente 2 ok*/
+        this.email = 'dimoces460@lineacr.com';
+        this.password = '123456';
+        // this.usuario.email = 'kylianmbappe@gmail.com';
+        // this.usuario.password = '123456';
         break;
       case 6:
-        this.usuario.email = 'juanromanriquelme@gmail.com';
-        this.usuario.password = '123456';
+         /*paciente 3 ok*/
+         this.email = 'fejir66590@operades.com';
+        this.password = '123456';
+        // this.usuario.email = 'juanromanriquelme@gmail.com';
+        // this.usuario.password = '123456';
         break;
       default:
         console.log('Número de ingreso rápido no válido');
