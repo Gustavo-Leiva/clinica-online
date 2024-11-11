@@ -1,68 +1,72 @@
 <header>
   <nav class="navbar">
-
-    <!-- Contenido del usuario logueado -->
-    <div appExpandirHover *ngIf="usuarioLogueado">
-      <div class="profile-picture">
-        <img *ngIf="usuarioLogueado && isPaciente(usuarioLogueado)" [src]="usuarioLogueado.fotoPerfil1"
-          alt="Foto de perfil" />
-        <span *ngIf="usuarioLogueado && !isPaciente(usuarioLogueado)" class="no-photo">Sin foto</span>
-      </div>
-      <h3>
-        {{ usuarioLogueado.nombre}} {{usuarioLogueado.apellido}}
-        {{ usuarioLogueado.tipoUsuario | iconosUsuario }}
-      </h3>
-    </div>
-
+    <!-- Logo -->
     <div appExpandirHover class="navbar-logo">
       <img src="assets/imagenes/logo.jfif" alt="Logo Clínica" class="logo" />
       <span>Clínica Salud</span>
     </div>
 
+    <!-- Enlaces de navegación -->
     <ul class="navbar-links">
       <div class="navbar-auth">
-        <li appExpandirHover>
-          <a href="#" class="btn inicio">
-            <strong> 🏠 Inicio</strong>
+
+        <!-- Enlace a Home -->
+        <li *ngIf="usuarioLogueado" appExpandirHover>
+          <a routerLink="/home" class="btn inicio">
+            <strong>🏠 Inicio</strong>
           </a>
         </li>
 
+         <!-- Enlace a Home -->
+         <li *ngIf="!usuarioLogueado" >
+          <a appExpandirHover href="/home" class="btn inicio">
+            <strong>🏠 Inicio</strong>
+          </a>
+        </li>
+
+        <!-- Enlaces cuando NO está logueado -->
         <li *ngIf="!usuarioLogueado" appExpandirHover>
-          <a href="/login" class="btn login">
-            <strong> 📤 Ingresar</strong>
-          </a>
+          <a href="/login" class="btn login"><strong> 📤 Ingresar</strong></a>
+        </li>
+        <li *ngIf="!usuarioLogueado" appExpandirHover>
+          <a href="/registro" class="btn register"><strong> 📝 Registrarse</strong></a>
         </li>
 
-        <li  *ngIf="!usuarioLogueado" appExpandirHover>
-          <a href="/registro" class="btn register">
-            <strong> 📝 Registrarse</strong>
-          </a>
+        <!-- Enlaces para paciente -->
+        <li *ngIf="usuarioLogueado?.tipoUsuario === 'paciente'" appExpandirHover>
+          <a routerLink="/perfil" class="btn perfil"><strong> 🧑 Mi Perfil</strong></a>
+        </li>
+        <li *ngIf="usuarioLogueado?.tipoUsuario === 'paciente'" appExpandirHover>
+          <a routerLink="/turnos" class="btn turnos"><strong> 🗓️ Mis Turnos</strong></a>
         </li>
 
-        <li *ngIf="usuarioLogueado?.tipoUsuario == 'administrador'" appExpandirHover >
-          <a routerLink="/perfil" class="btn perfil">
-            <strong> 🧑 Mi Perfil</strong>     
-          </a>
+        <!-- Enlaces para especialista -->
+        <li *ngIf="usuarioLogueado?.tipoUsuario === 'especialista'" appExpandirHover>
+          <a routerLink="/panelEspecialista" class="btn especialista"><strong> 🩺 Panel Especialista</strong></a>
         </li>
 
-        <li *ngIf="usuarioLogueado?.tipoUsuario == 'administrador'" appExpandirHover >
-          <a routerLink="/infomes" class="btn informes">
-            <strong> 📊 Informes</strong>     
-          </a>
+        <!-- Enlaces para administrador -->
+        <li *ngIf="usuarioLogueado?.tipoUsuario === 'administrador'" appExpandirHover>
+          <a routerLink="/perfil" class="btn perfil"><strong> 🧑 Mi Perfil</strong></a>
+        </li>
+        <li *ngIf="usuarioLogueado?.tipoUsuario === 'administrador'" appExpandirHover>
+          <a routerLink="/infomes" class="btn informes"><strong> 📊 Informes</strong></a>
+        </li>
+        
+    
+
+        <div *ngIf="usuarioLogueado?.tipoUsuario === 'administrador'" appExpandirHover class="game-card" (click)="NavegarPanelAdmin()">
+          <!-- <h2>administrador</h2> -->
+             <a  class="btn admin"><strong> 💎 Admin</strong></a>
+         </div>
+
+        <!-- Enlace de salir -->
+        <li *ngIf="usuarioLogueado" appExpandirHover>
+          <a (click)="logout()" class="btn salir"><strong> 👤❌ Salir</strong></a>
         </li>
 
-        <li *ngIf="usuarioLogueado?.tipoUsuario == 'administrador'" appExpandirHover >
-          <a href="/panelAdmin" class="btn admin">
-            <strong> 💎 Admin </strong>     
-          </a>
-        </li>
-
-        <li appExpandirHover>
-          <a *ngIf="usuarioLogueado" (click)="logout()" routerLink="" class="btn salir">
-            <strong> 👤❌ Salir</strong>
-          </a>
-        </li>
       </div>
     </ul>
   </nav>
 </header>
+

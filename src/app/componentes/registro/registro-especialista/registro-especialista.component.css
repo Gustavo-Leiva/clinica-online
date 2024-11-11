@@ -6,6 +6,10 @@ registro especialista css
 /* ----------------------------------------
    Estilo del formulario
 ---------------------------------------- */
+h2{
+    font-family: 'Trebuchet MS';
+    color: #54BAB9;
+}
 
 .registro-especialista {
     text-align: center; /* Centra el texto */
@@ -276,6 +280,43 @@ label {
     color: #ff0000; /* Cambia el color al pasar el ratón */
 }
 
-
+/* ----------------------------------------
+   Estilo para especilidad de medico (boton/titulo)
+---------------------------------------- */
+.especialidad-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Alinea el texto y el botón en los extremos */
+    gap: 10px; /* Espacio entre la especialidad y el botón */
+    padding: 2px 8px; /* Reduce el espacio interno */
+    font-size: 0.75em; /* Tamaño de fuente más pequeño */
+    width: auto; /* Asegura que el botón se ajuste a su contenido */
+    min-width: unset; /* Elimina el ancho mínimo si viene de clases de Bootstrap */
+  }
+  
+  .especialidad-item button {
+    padding: 2px 6px; /* Ajusta el tamaño del botón */
+    font-size: 0.9em; /* Hace el texto del botón más pequeño */
+  }
     
+  .btn-compacto {
+    padding: 2px 5px;
+    font-size: 0.75em;
+    width: auto;
+  }
+
+  .titulo-especialidades {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.5em;
+    color: #4A90E2; /* Azul moderno */
+    background-color: #f0f8ff; /* Fondo azul claro */
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-align: center;
+    border-left: 4px solid #4A90E2; /* Borde decorativo a la izquierda */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    margin-bottom: 20px;
+    letter-spacing: 1px; /* Espaciado de letras */
+  }
+  
       

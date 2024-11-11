@@ -5,19 +5,19 @@ import swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { IconosUsuarioPipe} from '../../pipes/iconos-usuario.pipe';
 import { ExpandirHoverDirective } from '../../directivas/expandir-hover.directive';
-
+import { Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, IconosUsuarioPipe, ExpandirHoverDirective],
+  imports: [CommonModule, ExpandirHoverDirective],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
 export class HeaderComponent  implements OnInit {
   usuarioLogueado: Usuario | null = null; // Inicialización para evitar el error
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.authService.actualUser$.subscribe((user) => {
@@ -51,5 +51,10 @@ export class HeaderComponent  implements OnInit {
   isEspecialista(usuario: Usuario): usuario is Especialista {
     return (usuario as Especialista).especialidad !== undefined;
   }
+
+
+      // Método para navegar a un destino específico
+       NavegarPanelAdmin() {
+      this.router.navigate(['/panelAdmin']); // Esto navega al componente de resultados
+    }
 }
-  
