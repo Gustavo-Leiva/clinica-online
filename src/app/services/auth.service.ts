@@ -47,6 +47,11 @@ export class AuthService {
     });
   }
 
+  // Método para obtener el usuario actual
+  getUser(): Usuario | null {
+    return this.actualUserSubject.value;
+  }
+
   // Función para mapear User (Firebase) a Usuario (tu interfaz personalizada)
   private mapUserToUsuario(user: User): Usuario {
     // Lógica para determinar el tipo de usuario

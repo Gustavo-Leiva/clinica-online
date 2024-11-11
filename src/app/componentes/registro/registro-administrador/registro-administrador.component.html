@@ -1,1 +1,121 @@
-<p>registro-administrador works!</p>
+
+
+
+    <div   class="altas-administrador-container">
+    
+            
+        <form *ngIf="!completed" [formGroup]="registroAdministradorForm" (ngSubmit)="onSubmit()">
+            <h2 class="registro-administrador">Registro de Administrador</h2>
+            
+            <!-- Nombre y Apellido -->
+            <div class="form-group-inline">
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                  <input type="text" id="nombre" formControlName="nombre" required class="form-control"/>
+                  <div *ngIf="registroAdministradorForm.get('nombre')?.invalid && (registroAdministradorForm.get('nombre')?.touched || submitted)" class="error-message">
+                      <div *ngIf="registroAdministradorForm.get('nombre')?.errors?.['required']">Este campo es obligatorio.</div>
+                      <div *ngIf="registroAdministradorForm.get('nombre')?.errors?.['maxlength']">El nombre debe tener menos de 20 caracteres.</div>
+                      <div *ngIf="registroAdministradorForm.get('nombre')?.errors?.['pattern']">El nombre solo debe contener letras.</div>
+                  </div>
+              </div>
+    
+              <div class="form-group">
+                  <label for="apellido">Apellido:</label>
+                  <input type="text" id="apellido" formControlName="apellido" required class="form-control"/>
+                  <div *ngIf="registroAdministradorForm.get('apellido')?.invalid && (registroAdministradorForm.get('apellido')?.touched || submitted)" class="error-message">
+                      <div *ngIf="registroAdministradorForm.get('apellido')?.errors?.['required']">Este campo es obligatorio.</div>
+                      <div *ngIf="registroAdministradorForm.get('apellido')?.errors?.['maxlength']">El apellido debe tener menos de 20 caracteres.</div>
+                      <div *ngIf="registroAdministradorForm.get('apellido')?.errors?.['pattern']">El apellido solo debe contener letras.</div>
+                  </div>
+              </div>
+            </div>
+            
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email:</label>
+              <input type="email" id="email" formControlName="email" required class="form-control"/>
+              <div *ngIf="registroAdministradorForm.get('email')?.invalid && (registroAdministradorForm.get('email')?.touched || submitted)" class="error-message">
+                  Este campo es obligatorio.
+              </div>
+              <div *ngIf="registroAdministradorForm.get('email')?.hasError('email')" class="error-message">
+                  Debe ser un email válido.
+              </div>
+          </div>
+          
+          <!-- Edad y DNI -->
+          <div class="form-group-inline">
+              <div class="form-group">
+                  <label for="edad">Edad:</label>
+                  <input id="edad" type="number" formControlName="edad" required class="form-control"/>
+                  <div *ngIf="registroAdministradorForm.get('edad')?.invalid && (registroAdministradorForm.get('edad')?.touched || submitted)" class="error-message">
+                      Este campo es obligatorio.
+                  </div>
+                  <div *ngIf="registroAdministradorForm.get('edad')?.hasError('min') || registroAdministradorForm.get('edad')?.hasError('max')" class="error-message">
+                      Debe ser mayor de 0 y menor de 100 años.
+                  </div>
+              </div>
+    
+              <div class="form-group">
+                  <label for="dni">DNI:</label>
+                  <input id="dni" type="text" formControlName="dni" required class="form-control"/>
+                  <div *ngIf="registroAdministradorForm.get('dni')?.invalid && (registroAdministradorForm.get('dni')?.touched || submitted)" class="error-message">
+                      Este campo es obligatorio.
+                  </div>
+                  <div *ngIf="registroAdministradorForm.get('dni')?.hasError('pattern')" class="error-message">
+                      El DNI debe ser un número válido de 8 dígitos.
+                    </div>
+              </div>
+          </div>
+          
+          <!-- Contraseña -->
+          <div class="form-group-inline">
+              <div class="form-group">
+                  <label for="password">Contraseña:</label>
+                  <input type="password" id="password" formControlName="password" required class="form-control"/>
+                  <div *ngIf="registroAdministradorForm.get('password')?.invalid && (registroAdministradorForm.get('password')?.touched || submitted)" class="error-message">
+                      Este campo es obligatorio.
+                  </div>
+                  <div *ngIf="registroAdministradorForm.get('password')?.hasError('minlength')" class="error-message">
+                      La contraseña debe tener al menos 6 caracteres.
+                  </div>
+              </div>
+    
+              
+            </div>
+    
+          <!-- Imagen de perfil -->
+          <div class="form-group">
+              <label>Imagen de perfil 1:</label>
+              <input type="file" (change)="onFileSelect($event)" required class="form-control"/>
+              <div *ngIf="submitted && !imagenPerfil1" class="error-message">
+                  La imagen de perfil 1 es obligatoria.
+                </div>
+            </div>
+            
+         
+    
+           <!-- Mensaje de error -->
+        <div *ngIf="msjError" class="error-message">
+            {{ msjError }}
+        </div>
+    
+          
+          <button type="submit" class="submit-btn">Registrar Administrador</button>
+    
+       
+        </form>
+        
+          
+        <div *ngIf="isLoading" class="spinner-container">
+            <div>
+                <p class="loading-message">.... Registrando Administrador .....</p>
+                <div class="spinner"></div>
+            </div>
+        </div>
+        
+       
+        <p *ngIf="submitted && registroAdministradorForm.invalid" class="error-message">Por favor completa todos los campos obligatorios.</p>
+    
+    
+    </div>
+    

@@ -13,6 +13,11 @@
     <button (click)="selectRole('especialista')" class="role-button">
       <img src="assets/imagenes/especialista.png" alt="Especialista" />
     </button>
+
+   <!-- Mostrar solo si el usuario es administrador -->
+    <button *ngIf="isAdmin" (click)="selectRole('administrador')" class="role-button">
+        <img src="assets/imagenes/administrador.png" alt="Administrador" />
+    </button>
   </div>
 
   <!-- Formulario centrado en pantalla cuando se selecciona un rol -->
@@ -28,6 +33,13 @@
     <div *ngIf="selectedRole === 'especialista'" class="form-content">
       <app-registro-especialista (registrationCompleted)="onCompleted()"></app-registro-especialista>
     </div>
+
+    <div *ngIf="selectedRole === 'administrador'" class="form-content">
+        <app-registro-administrador (registrationCompleted)="onCompleted()"></app-registro-administrador>
+    </div>
+    
+  
+
   </div>
 
   <!-- Mensaje de confirmación dependiendo del rol registrado -->
@@ -38,6 +50,10 @@
     <p *ngIf="userRole === 'especialista'">
       😊 Especialista registrado satisfactoriamente. ¡Carga terminada! 😊
     </p>
+
+    <p *ngIf="userRole === 'administrador'">
+        😊 Administrador registrado satisfactoriamente. ¡Carga terminada! 😊
+      </p>
   </div>
 </div>
 </body>
