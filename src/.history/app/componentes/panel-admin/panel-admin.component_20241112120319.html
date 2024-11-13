@@ -1,0 +1,42 @@
+<app-header></app-header>
+
+<div class="container">
+
+    <div class="row custom-row">
+        <div class="custom-col">
+            <div class="menu-option-card" class="menu-option-card" (click)="mostrarUsuarios = true ; mostrarAceptarEspecialistas = false ; mostrarRegistrarUsuarios = false ; mostrarTurnos = false">
+                <div class="menu-option-content">
+                    <h4>Todos los Usuarios</h4>
+                    <i class="fa-solid fa-users"></i>
+                </div>
+            </div>
+        </div>
+        <div class="custom-col">
+            <div class="menu-option-card">
+                <div class="menu-option-content">
+                    <h4>Aceptar/Rechazar Especialistas</h4>
+                    <i class="fa-solid fa-thumbs-up"></i>
+                    <i class="fa-solid fa-thumbs-down"></i>
+                </div>
+            </div>
+        </div>
+        <div class="custom-col">
+            <div class="menu-option-card" (click)="NavegarRegistro()">
+                <div class="menu-option-content">
+                    <h4>Registrar Usuarios</h4>
+                    <i class="fa-solid fa-id-card"></i>
+                </div>
+            </div>
+        </div>
+        <div class="custom-col">
+            <div class="menu-option-card">
+                <div class="menu-option-content">
+                    <h4>Turnos</h4>
+                    <i class="fa-solid fa-calendar-days"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+   
+  </div> 

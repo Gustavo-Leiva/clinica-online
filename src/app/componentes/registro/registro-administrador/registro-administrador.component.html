@@ -86,7 +86,7 @@
           <!-- Imagen de perfil -->
           <div class="form-group">
               <label>Imagen de perfil 1:</label>
-              <input type="file" (change)="onFileSelect($event)" required class="form-control"/>
+              <input type="file" (change)="onFileSelect($event,1)" required class="form-control"/>
               <div *ngIf="submitted && !imagenPerfil1" class="error-message">
                   La imagen de perfil 1 es obligatoria.
                 </div>

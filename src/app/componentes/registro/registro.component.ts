@@ -34,7 +34,7 @@ export class RegistroComponent {
       }
     }
 
-  // Selección de rol
+  // Selección de role
   selectRole(role: string): void {
     this.selectedRole = role;
   }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, onAuthStateChanged, User } from '@angular/fire/auth';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { Usuario, Paciente, Administrador, Especialista } from '../componentes/interfaces/Usuario';
 import { Firestore, collection, addDoc, doc, getDoc, setDoc } from '@angular/fire/firestore';
@@ -15,19 +16,7 @@ export class AuthService {
   private actualUserSubject = new BehaviorSubject<Usuario | null>(null);
   public actualUser$ = this.actualUserSubject.asObservable();
 
-  // constructor(private auth: Auth, private firestore: Firestore, private router: Router) {
-  //   onAuthStateChanged(this.auth, (user) => {
-  //     if (user) {
-  //       this.userActive = user;
-  //       const usuario: Usuario = this.mapUserToUsuario(user); // Convierte el User en un Usuario
-  //       this.actualUserSubject.next(usuario); // Actualiza el estado con el tipo correcto
-  //     } else {
-  //       this.userActive = null;
-  //       this.actualUserSubject.next(null);
-  //     }
-  //   });
-  // }
-
+ 
 
   constructor(private auth: Auth, private firestore: Firestore, private router: Router) {
     onAuthStateChanged(this.auth, async (user) => {
@@ -51,6 +40,11 @@ export class AuthService {
   getUser(): Usuario | null {
     return this.actualUserSubject.value;
   }
+
+ // Método para obtener el usuario actual como Observable
+  getCurrentUser(): Observable<Usuario | null> {
+  return this.actualUserSubject.asObservable();
+}
 
   // Función para mapear User (Firebase) a Usuario (tu interfaz personalizada)
   private mapUserToUsuario(user: User): Usuario {
@@ -114,6 +108,7 @@ async login(email: string, password: string): Promise<User> {
     if (!res.user.emailVerified) {
       this.msjError = 'Por favor, verifica tu correo electrónico antes de iniciar sesión.';
       throw new Error(this.msjError);
+      this.logoutEstatico();
     }
 
     // Si el correo está verificado, continuar con el proceso de inicio de sesión
@@ -207,9 +202,11 @@ mostrarErrorLogin(codigoError: string): string {
 
 
 
- // Función para registrar usuario
+ //Función para registrar usuario
 async registrarUsuario(usuario: Usuario, password: string) {
   console.log('Registrando usuario con email:', usuario.email);
+
+
 
   // Verificar si el correo electrónico es válido
   if (!usuario.email || usuario.email.trim() === '') {
@@ -224,41 +221,48 @@ async registrarUsuario(usuario: Usuario, password: string) {
     const res = await createUserWithEmailAndPassword(this.auth, usuario.email, password);
     console.log('Respuesta de Firebase:', res);
 
+
+    
+
+
+
     // Almacenar el usuario en Firestore con las propiedades correspondientes
     const userRef = doc(this.firestore, 'usuarios', res.user.uid); // Usamos el UID como ID del documento
+      
     if (usuario.tipoUsuario === 'paciente') {
       const paciente = usuario as Paciente;
       await setDoc(userRef, {
         ...paciente,
         uid: res.user.uid,
+       
+       
+      
       });
+
     } else if (usuario.tipoUsuario === 'administrador') {
       const administrador = usuario as Administrador;
       await setDoc(userRef, {
         ...administrador,
         uid: res.user.uid,
+        
+      
       });
     } else if (usuario.tipoUsuario === 'especialista') {
       const especialista = usuario as Especialista;
       await setDoc(userRef, {
         ...especialista,
         uid: res.user.uid,
+       
       });
     }
 
-    // Enviar correo de verificación
+        // Enviar correo de verificación
     await sendEmailVerification(res.user);
     console.log('Correo de verificación enviado a:', usuario.email);
 
     return res.user;
   } catch (e: any) {
-    // console.error('Error al registrar usuario:', e);
-
-    // Llamada al método mostrarErrorRegistro
-    // this.msjError = this.mostrarErrorRegistro(e.code); 
-
-    // throw new Error(this.msjError);  Lanza el error con el mensaje adecuado
-  
+     
     console.error('Error al registrar usuario:', e); // Esto imprimirá el objeto de error completo
 
     // Verificar si el error es de Firebase y contiene un código
@@ -269,6 +273,112 @@ async registrarUsuario(usuario: Usuario, password: string) {
     throw new Error(this.msjError);
   }
 }
+
+// Método para subir imágenes a Firebase Storage
+async subirImagen(file: File, path: string): Promise<string> {
+  const storage = getStorage(); // Inicializa Firebase Storage
+  const storageRef = ref(storage, path); // Referencia a la ruta donde se almacenará la imagen
+
+  try {
+    await uploadBytes(storageRef, file); // Sube la imagen al Storage
+    const downloadURL = await getDownloadURL(storageRef); // Obtén la URL de la imagen
+    console.log('URL de imagen obtenida:', downloadURL); // Agrega un log para confirmar la URL
+    return downloadURL; // Retorna la URL
+  } catch (error) {
+    console.error('Error al subir la imagen:', error); // Log de error
+    throw new Error('Error al subir la imagen');
+  }
+}
+
+
+// // Función para registrar usuario
+// async registrarUsuario(usuario: any, password: string, file1?: File, file2?: File) {
+//   console.log('Registrando usuario con email:', usuario.email);
+
+//   // Verificación del correo electrónico
+//   if (!usuario.email || usuario.email.trim() === '') {
+//     throw new Error('El correo electrónico es obligatorio');
+//   }
+//   if (!usuario.email || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(usuario.email.trim())) {
+//     throw new Error('El correo electrónico no tiene un formato válido.');
+//   }
+
+//   try {
+//     // Registro de usuario en Firebase
+//     const res = await createUserWithEmailAndPassword(this.auth, usuario.email, password);
+//     console.log('Respuesta de Firebase:', res);
+
+//     let fotoURL1 = '';
+//     let fotoURL2 = '';
+
+//     // Subir la primera imagen si existe
+//     if (file1) {
+//       const path1 = `usuarios/${res.user.uid}/fotoPerfil1.jpg`;
+//       fotoURL1 = await this.subirImagen(file1, path1);
+//       console.log('URL de fotoPerfil1:', fotoURL1); // Verifica si se obtiene la URL correctamente
+//     }
+
+//     // Subir la segunda imagen si existe
+//     if (file2) {
+//       const path2 = `usuarios/${res.user.uid}/fotoPerfil2.jpg`;
+//       fotoURL2 = await this.subirImagen(file2, path2);
+//       console.log('URL de fotoPerfil2:', fotoURL2); // Verifica si se obtiene la URL correctamente
+//     }
+
+//     // Verifica si las URLs están vacías antes de guardar
+//     if (!fotoURL1 && !fotoURL2) {
+//       throw new Error('No se pudieron obtener las URLs de las imágenes.');
+//     }
+
+//     // Preparar los datos para Firestore
+//     const userRef = doc(this.firestore, 'usuarios', res.user.uid);
+//     let userData = {
+//       ...usuario,
+//       uid: res.user.uid,
+//       fotoPerfil1: fotoURL1,
+//       fotoPerfil2: fotoURL2
+//     };
+
+//     // Guardar en Firestore
+//     await setDoc(userRef, userData);
+//     console.log('Usuario guardado en Firestore:', userData);
+
+//     // Enviar correo de verificación
+//     await sendEmailVerification(res.user);
+//     console.log('Correo de verificación enviado a:', usuario.email);
+
+//     return res.user;
+//   } catch (e: any) {
+//     console.error('Error al registrar usuario:', e);
+//     throw new Error(e.message);
+//   }
+// }
+// // Método para subir imágenes a Firebase Storage
+// // Método para subir imagen
+// async subirImagen(file: File, path: string): Promise<string> {
+//   try {
+//     const storage = getStorage(); // Inicializa el almacenamiento de Firebase
+//     const storageRef = ref(storage, path); // Crea la referencia para el archivo
+//     await uploadBytes(storageRef, file); // Sube el archivo a la referencia
+//     const downloadURL = await getDownloadURL(storageRef); // Obtiene la URL de descarga
+
+//     console.log('Imagen subida correctamente, URL:', downloadURL);
+
+//     // Verificar si la URL de descarga es válida
+//     if (!downloadURL) {
+//       throw new Error('No se pudo obtener la URL de la imagen.');
+//     }
+
+//     return downloadURL; // Retorna la URL
+//   } catch (error) {
+//     console.error('Error al subir la imagen:', error);
+//     throw error; // Lanza el error si ocurre
+//   }
+// }
+
+
+
+
 
 // Método para mostrar mensaje de error según el código de error en el registro
 mostrarErrorRegistro(codigoError: string): string {
@@ -296,17 +406,10 @@ mostrarErrorRegistro(codigoError: string): string {
   }
 
   
-  // logout(){
-  //   this.actualUserSubject.next(null); // Establece el usuario en null
-  //   this.auth.signOut();
-  // }
-
-  // Método para subir imágenes a Firebase Storage
-  async subirImagen(file: File, path: string): Promise<string> {
-    const storage = getStorage();
-    const storageRef = ref(storage, path);
-    await uploadBytes(storageRef, file);
-    const downloadURL = await getDownloadURL(storageRef);
-    return downloadURL;
+  logoutEstatico(){
+    this.actualUserSubject.next(null); // Establece el usuario en null
+    this.auth.signOut();
   }
+
+  
 }

@@ -1,0 +1,29 @@
+<div class="container" style="margin-bottom: 450px;">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="menu-option-card" (click)="mostrarReservarTurno = true; showProximosTurnos = false;showHistorialClinico = false; cargarHorarios(this.dniDoctorSeleccionado,this.fechaSeleccionada)">
+          <div class="menu-option-content">
+            <i class="fas fa-calendar-plus"></i>
+            <h4>Reservar Turno</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="menu-option-card" (click)="showProximosTurnos = true; showReservarTurno = false;showHistorialClinico=false; cargarProximosTurnos()">
+          <div class="menu-option-content">
+            <i class="fa-solid fa-business-time"></i>
+            <h4 *ngIf="this.usuarioLogueado?.tipoUsuario == 'Paciente'">Mis Turnos</h4>
+            <h4 *ngIf="this.usuarioLogueado?.tipoUsuario == 'Admin'">Todos los Turnos</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="menu-option-card" (click)="showProximosTurnos=false;showHistorialClinico = true; showReservarTurno = false; cargarHistorialClinico()">
+          <div class="menu-option-content">
+            <i class="fas fa-file-medical-alt"></i>
+            <h4>Historial Atenciones</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>

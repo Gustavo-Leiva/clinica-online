@@ -1,0 +1,147 @@
+/* Estilos para el menú de opciones */
+
+/* Estilos generales para las tarjetas del menú */
+.menu-option-card {
+    cursor: pointer;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 180px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    flex-grow: 1;
+    flex-basis: 22%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+/* Efecto hover */
+.menu-option-card:hover {
+    background-color: #007bff;
+    color: white;
+    transform: scale(1.05);
+}
+
+.menu-option-card:hover i {
+    color: white;
+}
+
+/* Contenido dentro de las tarjetas */
+.menu-option-content {
+    text-align: center;
+}
+
+/* Iconos dentro de las tarjetas */
+.menu-option-content i {
+    font-size: 2rem;
+    color: #007bff;
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+/* Título en las tarjetas */
+.menu-option-content h4 {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+/* Ajustes para el contenedor de la fila */
+.row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* Asegura que las tarjetas sean compactas */
+.menu-option-card {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    height: 180px;
+    padding: 15px;
+    flex: 1;
+}
+
+/* Imagen del perfil */
+.profile-picture {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Estilo de foto cuando no existe */
+.no-photo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #ccc;
+    color: #fff;
+}
+
+/* Para la animación de la carga */
+@keyframes rotate-center {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(360deg); }
+}
+
+.custom-spinner img {
+    animation: rotate-center 1s ease-in-out infinite both;
+    max-width: 200px;
+    height: 200px;
+    opacity: 1;
+}
+
+.custom-spinner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1011;
+    background-color: rgba(91, 91, 91, 0.6);
+}
+
+.custom-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.custom-col {
+    flex: 1 1 23%; /* Cada columna ocupa el 23% del ancho para dejar un pequeño espacio entre columnas */
+    box-sizing: border-box;
+    margin: 5px 0;
+}
+
+
+  
+  
+  

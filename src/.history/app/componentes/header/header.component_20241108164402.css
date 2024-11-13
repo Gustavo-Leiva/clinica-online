@@ -1,0 +1,148 @@
+/* Reset de estilos básicos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+  }
+  
+  /* Estilos para el navbar */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0d91c1; /* Color de fondo base */
+    background: linear-gradient(to bottom, #33bdef 5%, #019ad2 100%); /* Gradiente en la navbar */
+    padding: 1rem 2rem;
+    color: #f9fafb;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra elegante */
+    border-radius: 5px; 
+}
+  
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-logo .logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 0.8rem;
+    border-radius: 50%; /* Para darle un estilo circular al logo */
+  }
+  
+  .navbar-logo span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e5e7eb;
+  }
+  
+  .navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+
+  .navbar-auth {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .btn {
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px; /* Bordes redondeados */
+    font-weight: bold;
+   
+  }
+  
+  .btn.login, 
+  .btn.register, 
+  .btn.inicio, 
+  .btn.salir, 
+  .btn.informes, 
+  .btn.perfil, 
+  .btn.btn.admin {
+  
+    /* background: linear-gradient(135deg, #6a1b9a, #ec0584); Gradiente de morado a rosa */
+    background: linear-gradient(135deg, #38b6ff, #43d1af);
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
+    cursor: pointer;
+  }
+  
+
+  
+  /*no uso este hover porque ya lo uso en la directiva*/
+  /* .btn:hover {
+    background-color: #ef233c;
+    color: white;
+    transform: scale(1.05);  Pequeño efecto de zoom 
+  } 
+  */
+
+  .btn.login:hover, 
+  .btn.register:hover, 
+  .btn.inicio:hover, 
+  .btn.btn.salir:hover,
+  .btn.btn.informes:hover,
+  .btn.btn.perfil:hover, 
+  .btn.btn.admin:hover
+  {
+    background: linear-gradient(135deg, #43d1af, #38b6ff); /* Inversión del gradiente */
+    /* transform: translateY(-2px); Efecto de elevación al pasar el mouse */
+}
+
+.swal-popup {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  text-align: center;
+  color: #333; /* Color de texto neutro y profesional */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+
+
+
+
+.profile-picture {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #ccc;
+  color: #fff;
+}
+
+h3 {
+  margin-top: 8px;
+  margin-left: 6px;
+  color: black; 
+  font-family: Montserrat; 
+  font-size: 20px;
+}

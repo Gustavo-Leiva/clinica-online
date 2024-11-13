@@ -59,6 +59,7 @@ export class LoginComponent {
           } else {
             this.flagError = true;
             this.msjError = 'La cuenta de Especialista no está aprobada o el email no está verificado.';
+            
           }
         } else if (user.tipoUsuario === 'paciente') {
           if (user.emailVerificado) {
@@ -66,12 +67,14 @@ export class LoginComponent {
           } else {
             this.flagError = true;
             this.msjError = 'La cuenta de Paciente no tiene el email verificado.';
+          
           }
-        } else if (user.tipoUsuario === 'administrador') {
+        } else if (user.tipoUsuario === 'administrador'&& user.emailVerificado) {
           this.router.navigate(['/admin-dashboard']);
         } else {
           this.flagError = true;
           this.msjError = 'Perfil de usuario no reconocido.';
+          
         }
       } else {
         this.flagError = true;
@@ -120,7 +123,7 @@ export class LoginComponent {
     switch (numero) {
       case 1:
         /*admin */
-        this.email = 'mipeso9543@opposir.com';
+        this.email = 'pofexa3710@opposir.com';
         this.password = '123456';
         // this.usuario.email = 'yohija6461@operades.com';
         // this.usuario.password = '123456';
@@ -128,36 +131,36 @@ export class LoginComponent {
       case 2:
       /*especialista1*/
       
-      this.email = 'dinab63950@inikale.com';
+      this.email = 'foxiwap520@lineacr.com';
       this.password = '123456';
         // this.usuario.email = 'dinab63950@inikale.com';
         // this.usuario.password = '123456';
         break;
       case 3:
         /*especialista2*/
-        this.email = 'repeb23606@lineacr.com';
+        this.email = 'pofexa3710@opposir.com';
         this.password = '123456';
         // this.usuario.email = 'repeb23606@lineacr.com';
         // this.usuario.password = '123456';
         break;
       case 4:
         /*paciente 1 ok */
-        this.email = 'pehab70923@lineacr.com';
+        this.email = 'kinok45388@opposir.com';
         this.password = '123456';
         // this.usuario.email = 'paciente@paciente.com';
         // this.usuario.password = 'paciente';
         break;
       case 5:
         /*paciente 2 ok*/
-        this.email = 'dimoces460@lineacr.com';
+        this.email = 'wisoxi6398@lineacr.com';
         this.password = '123456';
         // this.usuario.email = 'kylianmbappe@gmail.com';
         // this.usuario.password = '123456';
         break;
       case 6:
          /*paciente 3 ok*/
-         this.email = 'fejir66590@operades.com';
-        this.password = '123456';
+         this.email = 'wetowa4913@operades.com';
+         this.password = '123456';
         // this.usuario.email = 'juanromanriquelme@gmail.com';
         // this.usuario.password = '123456';
         break;

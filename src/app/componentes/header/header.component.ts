@@ -23,7 +23,10 @@ export class HeaderComponent  implements OnInit {
     this.authService.actualUser$.subscribe((user) => {
       console.log(user); // Aquí podrás ver si el usuario tiene los datos correctos
       this.usuarioLogueado = user;
-    });
+      if (this.usuarioLogueado) {
+        console.log('Usuario logueado:', this.usuarioLogueado);
+      }
+     });
   }
 
   logout() {
@@ -57,4 +60,10 @@ export class HeaderComponent  implements OnInit {
        NavegarPanelAdmin() {
       this.router.navigate(['/panelAdmin']); // Esto navega al componente de resultados
     }
+
+     // Método para navegar a un destino específico
+     NavegarPanelPaciente() {
+      this.router.navigate(['/panelPaciente']); // Esto navega al componente de resultados
+    }
 }
+
