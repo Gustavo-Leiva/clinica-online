@@ -26,6 +26,8 @@
   .navbar-logo {
     display: flex;
     align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0; /* Evita que el logo se ajuste */
   }
   
   .navbar-logo .logo {
@@ -50,7 +52,10 @@
 
   .navbar-auth {
     display: flex;
-    gap: 1rem;
+    align-items: center;
+    gap: 1.5rem;
+    flex-grow: 1;
+    justify-content: flex-end;
   }
   
   .btn {
@@ -122,12 +127,15 @@
   height: 45px;
   border-radius: 50%;
   overflow: hidden;
+  margin-right: 0.5rem; /* Espacio adicional */
 }
 
 .profile-picture img {
-  width: 100%;
-  height: 100%;
+  width: 40px; /* Tamaño de la imagen de perfil */
+  height: 40px;
+  border-radius: 50%;
   object-fit: cover;
+  margin-right: 0.5rem; /* Espacio entre la imagen y el nombre */
 }
 
 .no-photo {
@@ -142,9 +150,8 @@
 }
 
 h3 {
-  margin-top: 8px;
-  margin-left: 6px;
-  color: black; 
-  font-family: Montserrat; 
-  font-size: 20px;
+  margin: 0;
+  color: black;
+  font-family: Montserrat;
+  font-size: 1rem; /* Ajusta según sea necesario */
 }

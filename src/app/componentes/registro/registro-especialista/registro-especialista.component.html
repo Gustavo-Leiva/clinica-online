@@ -101,6 +101,16 @@
                     </button>
                 </div>
 
+
+                  <!-- Campo para agregar nueva especialidad -->
+                <div class="form-group">
+                    <label for="nuevaEspecialidad">Nueva especialidad:</label>
+                    <input id="nuevaEspecialidad" type="text" formControlName="nuevaEspecialidad" class="form-control" placeholder="Ingresa una nueva especialidad">
+                    <button type="button" (click)="agregarNuevaEspecialidad()" class="btn btn-primary btn-small mt-2">
+                    Añadir nueva especialidad
+                    </button>
+                </div>
+
                 <!-- Mensaje de error si no hay especialidades agregadas -->
                 <div *ngIf="submitted && especialidadesDelMedico.length === 0" class="error-message">
                     Debe seleccionar al menos una especialidad.
@@ -117,6 +127,7 @@
                             class="btn btn-danger btn-small btn-compacto">
                             Eliminar
                         </button>
+                        
                     </li>
                 </ul>
             </div>

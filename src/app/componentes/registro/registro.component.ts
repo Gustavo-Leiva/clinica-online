@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { RegistroEspecialistaComponent } from './registro-especialista/registro-especialista.component';
 import { RegistroAdministradorComponent } from './registro-administrador/registro-administrador.component';
@@ -13,7 +13,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './registro.component.css'
 })
 export class RegistroComponent {
-
+  @Input() mostrarHeader: boolean = true; // Mostrar header por defecto
   selectedRole: string | null = null;
   completed: boolean = false;
   userRole: string | null = null;

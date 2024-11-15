@@ -88,8 +88,9 @@ export class AuthService {
         email: user.email || '',
         password:'',
         fotoPerfil1: '',
-        especialidad: '', // Propiedad específica de los especialistas
+        especialidades: [], // Ahora es un array vacío en lugar de una cadena
         tipoUsuario: 'especialista',
+        estado: 'pendiente', // Valor por defecto para estado
       } as Especialista;
     }
 
@@ -291,6 +292,68 @@ async subirImagen(file: File, path: string): Promise<string> {
 }
 
 
+
+
+
+
+// Método para mostrar mensaje de error según el código de error en el registro
+mostrarErrorRegistro(codigoError: string): string {
+  switch (codigoError) {
+    case 'auth/invalid-email':
+      return 'El correo electrónico tiene un formato inválido';
+    case 'auth/email-already-in-use':
+      return 'El correo electrónico ya está en uso';
+    case 'auth/weak-password':
+      return 'La contraseña debe ser de más de 6 caracteres';
+    case 'auth/missing-password':
+      return 'Por favor, introduzca una contraseña';
+    default:
+      return 'Error desconocido: ' + codigoError;
+  }
+}
+
+
+  // Cierra la sesión del usuario activo
+
+  // Método de logout que devuelve una Promesa
+  logout(): Promise<void> {
+    return this.auth.signOut();
+  }
+
+ 
+
+  
+  logoutEstatico(){
+    this.actualUserSubject.next(null); // Establece el usuario en null
+    this.auth.signOut();
+  }
+
+    // Método para verificar si el usuario está autenticado y tiene el correo verificado
+    async isUserVerified(): Promise<boolean> {
+      const user = await this.auth.currentUser;
+      return user ? user.emailVerified : false;
+    }
+
+    
+
+
+
+
+   // logout() {
+  //   this.auth.signOut().then(() => {
+  //     this.router.navigate(['/home']);
+  //     this.userActive = null;
+  //   });
+  // }
+
+  // logout(){
+  //   this.actualUserSubject.next(null); // Establece el usuario en null
+  //   this.auth.signOut();
+  //   this.router.navigate(['/home']);
+  // }
+
+
+  
 // // Función para registrar usuario
 // async registrarUsuario(usuario: any, password: string, file1?: File, file2?: File) {
 //   console.log('Registrando usuario con email:', usuario.email);
@@ -375,41 +438,6 @@ async subirImagen(file: File, path: string): Promise<string> {
 //     throw error; // Lanza el error si ocurre
 //   }
 // }
-
-
-
-
-
-// Método para mostrar mensaje de error según el código de error en el registro
-mostrarErrorRegistro(codigoError: string): string {
-  switch (codigoError) {
-    case 'auth/invalid-email':
-      return 'El correo electrónico tiene un formato inválido';
-    case 'auth/email-already-in-use':
-      return 'El correo electrónico ya está en uso';
-    case 'auth/weak-password':
-      return 'La contraseña debe ser de más de 6 caracteres';
-    case 'auth/missing-password':
-      return 'Por favor, introduzca una contraseña';
-    default:
-      return 'Error desconocido: ' + codigoError;
-  }
-}
-
-
-  // Cierra la sesión del usuario activo
-  logout() {
-    this.auth.signOut().then(() => {
-      this.router.navigate(['home']);
-      this.userActive = null;
-    });
-  }
-
-  
-  logoutEstatico(){
-    this.actualUserSubject.next(null); // Establece el usuario en null
-    this.auth.signOut();
-  }
 
   
 }

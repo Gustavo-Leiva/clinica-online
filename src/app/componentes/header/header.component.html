@@ -1,5 +1,17 @@
 <header>
   <nav class="navbar">
+
+    
+ <!-- Contenido del usuario logueado -->
+        <div appExpandirHover *ngIf="usuarioLogueado" class="d-flex align-items-center">
+          <div class="profile-picture">
+            <img *ngIf="usuarioLogueado.fotoPerfil1" [src]="usuarioLogueado.fotoPerfil1" alt="Foto de perfil">
+            <span *ngIf="!usuarioLogueado.fotoPerfil1" class="no-photo">Sin foto</span>
+          </div>
+          <h3>{{ usuarioLogueado.nombre }} {{ usuarioLogueado.apellido }} {{ usuarioLogueado.tipoUsuario | iconosUsuario }}
+          </h3>
+        </div>
+
     <!-- Logo -->
     <div appExpandirHover class="navbar-logo">
       <img src="assets/imagenes/logo.jfif" alt="Logo Clínica" class="logo" />
@@ -11,14 +23,14 @@
       <div class="navbar-auth">
 
         <!-- Enlace a Home -->
-        <li *ngIf="usuarioLogueado" appExpandirHover>
+        <li *ngIf="usuarioLogueado" appExpandirHover (click)="NavegarHome()">
           <a routerLink="/home" class="btn inicio">
             <strong>🏠 Inicio</strong>
           </a>
         </li>
 
          <!-- Enlace a Home -->
-         <li appExpandirHover *ngIf="!usuarioLogueado" >
+         <li appExpandirHover *ngIf="!usuarioLogueado" (click)="NavegarHome()">
           <a  href="/home" class="btn inicio">
             <strong>🏠 Inicio</strong>
           </a>
@@ -32,9 +44,9 @@
           <a href="/registro" class="btn register"><strong> 📝 Registrarse</strong></a>
         </li>
 
-        <!-- Enlaces para paciente -->
-        <li *ngIf="usuarioLogueado?.tipoUsuario === 'paciente'" appExpandirHover>
-          <a routerLink="/perfil" class="btn perfil">
+        <!-- Enlaces perfil -->
+        <li *ngIf="usuarioLogueado"  appExpandirHover >
+          <a  routerLink="/perfil" class="btn perfil" (click)="NavegarPerfil()" >
             <strong> 🧑 Mi Perfil</strong></a>
         </li>
 
@@ -51,10 +63,10 @@
         </li>
 
         <!-- Enlaces para administrador -->
-        <li *ngIf="usuarioLogueado?.tipoUsuario === 'administrador'" appExpandirHover>
+        <!-- <li *ngIf="usuarioLogueado?.tipoUsuario === 'administrador'" appExpandirHover>
           <a routerLink="/perfil" class="btn perfil">
             <strong> 🧑 Mi Perfil</strong></a>
-        </li>
+        </li> -->
         <li *ngIf="usuarioLogueado?.tipoUsuario === 'administrador'" appExpandirHover>
           <a routerLink="/infomes" class="btn informes">
             <strong> 📊 Informes</strong></a>

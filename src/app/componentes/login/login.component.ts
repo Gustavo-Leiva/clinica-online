@@ -123,7 +123,7 @@ export class LoginComponent {
     switch (numero) {
       case 1:
         /*admin */
-        this.email = 'pofexa3710@opposir.com';
+        this.email = 'peheso2642@inikale.com';
         this.password = '123456';
         // this.usuario.email = 'yohija6461@operades.com';
         // this.usuario.password = '123456';

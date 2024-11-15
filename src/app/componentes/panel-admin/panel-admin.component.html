@@ -2,7 +2,10 @@
 
 <div class="container">
 
+   <!-- Titulos de : Listar Usuarios/ aceptar o rechazar especialista/ registrar usuario / mostrar turnos -->
     <div class="row custom-row">
+       
+      <!-- Mostrar Usuarios -->
         <div class="custom-col">
             <div class="menu-option-card" class="menu-option-card" (click)="mostrarUsuarios = true ; mostrarAceptarEspecialistas = false ; mostrarRegistrarUsuarios = false ; mostrarTurnos = false">
                 <div class="menu-option-content">
@@ -11,8 +14,11 @@
                 </div>
             </div>
         </div>
+       
+       
+        <!-- Aceptar/Rechazar especialistas -->
         <div class="custom-col">
-            <div class="menu-option-card">
+            <div class="menu-option-card" class="menu-option-card" (click)="mostrarUsuarios = false ; mostrarAceptarEspecialistas = true ; mostrarRegistrarUsuarios = false ; mostrarTurnos = false">
                 <div class="menu-option-content">
                     <h4>Aceptar/Rechazar Especialistas</h4>
                     <i class="fa-solid fa-thumbs-up"></i>
@@ -20,16 +26,23 @@
                 </div>
             </div>
         </div>
+        
+        
+        <!-- Registrar Usuarios -->
         <div class="custom-col">
-            <div class="menu-option-card" (click)="NavegarRegistro()">
+            <div class="menu-option-card" (click)="mostrarUsuarios = false ; mostrarAceptarEspecialistas = false ; mostrarRegistrarUsuarios = true ; mostrarTurnos = false">
+              <!-- <div class="menu-option-card" (click)="NavegarRegistro()"> -->
                 <div class="menu-option-content">
                     <h4>Registrar Usuarios</h4>
                     <i class="fa-solid fa-id-card"></i>
                 </div>
             </div>
         </div>
+        
+        
+        <!-- MostrarTurnos -->
         <div class="custom-col">
-            <div class="menu-option-card">
+            <div class="menu-option-card" (click)="mostrarUsuarios = false ; mostrarAceptarEspecialistas = false ; mostrarRegistrarUsuarios = false ; mostrarTurnos = true">
                 <div class="menu-option-content">
                     <h4>Turnos</h4>
                     <i class="fa-solid fa-calendar-days"></i>
@@ -39,7 +52,7 @@
     </div>
 
 
-    <div *ngIf="flagAdmin == true && mostrarUsuarios == true && mostrarAceptarEspecialistas == false && mostrarRegistrarUsuarios == false && mostrarTurnos == false">
+    <div class = "mostrar-usuarios" *ngIf="flagAdmin == true && mostrarUsuarios">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 style="text-align: center;">Todos los usuarios 👥</h2>
       </div>
@@ -59,7 +72,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let usuario of usuarios">
+          <tr appResaltarFila *ngFor="let usuario of usuarios">
             <td>
               <div class="profile-picture-list">
                 <img appExpandirHover ="usuario.fotoPerfil1" [src]="usuario.fotoPerfil1" alt="Foto de perfil" class="profile-image">
@@ -75,53 +88,109 @@
             </tbody>
       </table>
     </div>
+
+
+
     
-    </div>  
+  </div>  
+  
+  <div class="container" *ngIf="flagAdmin == true && mostrarAceptarEspecialistas == true && mostrarRegistrarUsuarios == false && mostrarUsuarios == false && mostrarTurnos == false ">
+    <h2 style="text-align: center;">Aceptar  ✅ /Rechazar ❌ Especialistas</h2>
 
    
-<!--     
-<div *ngIf="flagAdmin == true && mostrarAceptarEspecialistas == true && mostrarRegistrarUsuarios == false && mostrarUsuarios == false && mostrarTurnos == false " class="container">
-  <h2 style="text-align: center;">Aceptar/Rechazar Especialistas 👨🏻‍⚖️🔨</h2>
+     <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Email</th>
+          <th>Dni</th>
+          <th>Edad</th>
+          <th>Tipo Usuario</th>
+          <th>Especialidad</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <!-- <tbody>
+        <tr *ngFor="let usuario of usuarios"> -->
+          <!-- Verificamos si el usuario es un especialista y si su estado es 'pendiente' -->
+          <!-- <ng-container *ngIf="isEspecialista(usuario) && isEspecialista(usuario)?.estado === 'pendiente'">
+            <td>
+              <div class="profile-picture">
+                <img *ngIf="isEspecialista(usuario)?.fotoPerfil1" [src]="isEspecialista(usuario)?.fotoPerfil1" alt="Foto de perfil">
+                <span *ngIf="!isEspecialista(usuario)?.fotoPerfil1" class="no-photo">Sin foto</span>
+              </div>
+            </td>
+            <td>{{ isEspecialista(usuario)?.nombre }}</td>
+            <td>{{ isEspecialista(usuario)?.apellido }}</td>
+            <td>{{ isEspecialista(usuario)?.email }}</td>
+            <td>{{ isEspecialista(usuario)?.dni }}</td>
+            <td>{{ isEspecialista(usuario)?.edad }}</td>
+            <td>{{ isEspecialista(usuario)?.tipoUsuario }}</td>
+            <td>{{ isEspecialista(usuario)?.especialidad }}</td>
+            <td>
+              <button *ngIf="isEspecialista(usuario)" class="btn btn-success" style="height: 35px" 
+                (click)="actualizarEstadoEspecialista(isEspecialista(usuario)?.dni?.toString() || '', 'aceptado')">Aceptar</button>
+              <button *ngIf="isEspecialista(usuario)" class="btn btn-danger" style="height: 35px; margin-left: 5px;" 
+                (click)="actualizarEstadoEspecialista(isEspecialista(usuario)?.dni?.toString() || '', 'rechazado')">Rechazar</button>
+            </td>
+          </ng-container>
+        </tr>
+      </tbody> -->
+      
+      
+      
+      <tbody>
+        <tr *ngFor="let usuario of usuarios">
+          <!-- Verificamos si el usuario es un especialista y si su estado es 'pendiente' -->
+          <ng-container *ngIf="isEspecialista(usuario)">
+            <ng-container *ngIf="(isEspecialista(usuario)?.estado === 'pendiente')">
+              <td>
+                <div class="profile-picture">
+                  <img *ngIf="isEspecialista(usuario)?.fotoPerfil1" [src]="isEspecialista(usuario)?.fotoPerfil1" alt="Foto de perfil" class="profile-img">
+                  <span *ngIf="!isEspecialista(usuario)?.fotoPerfil1" class="no-photo">Sin foto</span>
+                </div>
+              </td>
+              <td>{{ isEspecialista(usuario)?.nombre }}</td>
+              <td>{{ isEspecialista(usuario)?.apellido }}</td>
+              <td>{{ isEspecialista(usuario)?.email }}</td>
+              <td>{{ isEspecialista(usuario)?.dni }}</td>
+              <td>{{ isEspecialista(usuario)?.edad }}</td>
+              <td>{{ isEspecialista(usuario)?.tipoUsuario }}</td>
+      
+              <!-- Mostrar especialidades si existe alguna -->
+              <td>
+                <span *ngIf="isEspecialista(usuario)?.especialidades; else sinEspecialidad">
+                  {{ isEspecialista(usuario)?.especialidades }}
+                </span>
+                <ng-template #sinEspecialidad>Sin especialidad</ng-template>
+              </td>
+      
+              <td>
+                <button *ngIf="isEspecialista(usuario)" class="btn btn-success" style="height: 35px" 
+                  (click)="actualizarEstadoEspecialista(isEspecialista(usuario)?.uid?.toString() || '', 'aceptado')">Aceptar</button>
+                <button *ngIf="isEspecialista(usuario)" class="btn btn-danger" style="height: 35px; margin-left: 5px;" 
+                  (click)="actualizarEstadoEspecialista(isEspecialista(usuario)?.uid?.toString() || '', 'rechazado')">Rechazar</button>
+              </td>
+            </ng-container>
+          </ng-container>
+        </tr>
+      </tbody>
+      
+      
+      
+      
+      
+      
 
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Usuario</th>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>Email</th>
-        <th>Dni</th>
-        <th>Edad</th>
-        <th>Tipo Usuario</th>
-        <th>Especialidad</th>
-        <th>Dias Atencion</th>
-        <th>Horario Atencion</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr appHighlightRow *ngFor="let especialista of especialistas">
-        <td>
-          <div class="profile-picture">
-            <img *ngIf="especialista.fotoPerfil1" [src]="especialista.fotoPerfil1" alt="Foto de perfil">
-            <span *ngIf="!especialista.fotoPerfil1" class="no-photo">Sin foto</span>
-          </div>
-        </td>
-        <td>{{ especialista.nombre }}</td>
-        <td>{{ especialista.apellido }}</td>
-        <td>{{ especialista.email }}</td>
-        <td>{{ especialista.dni }}</td>
-        <td>{{ especialista.edad }}</td>
-        <td>{{ especialista.tipoUsuario }}</td>
-        <td>{{ especialista.especialidad }}</td>
-        <td>{{ especialista.diasAtencion }}</td>
-        <td>{{ especialista.horariosAtencion }}</td>
-        <td>
-          <!-- <button *ngIf="especialista.especialidad" class="btn btn-success" style="height: 35px" (click)="actualizarEstado(especialista.dni,'true',especialista.email,especialista.password)">Aceptar</button>
-          <button *ngIf="especialista.especialidad" class="btn btn-danger" style="height: 35px;margin-left: 5px;" (click)="actualizarEstado(especialista.dni,'false',null,null)">Rechazar</button> -->
-        <!-- </td>
-      </tr>
-    </tbody>
-  </table> -->
-   <!-- -->
-  <!-- </div>  -->
+    </table>
+  </div>
+  
+
+
+
+
+  <div *ngIf="flagAdmin == true && mostrarRegistrarUsuarios == true && mostrarUsuarios == false && mostrarTurnos == false && mostrarAceptarEspecialistas == false" class="container">
+    <app-registro [mostrarHeader]="false"></app-registro>     
+  </div>

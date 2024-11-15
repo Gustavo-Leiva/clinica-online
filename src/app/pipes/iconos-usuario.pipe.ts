@@ -8,9 +8,9 @@ export class IconosUsuarioPipe implements PipeTransform {
 
   transform(tipoUsuario: any)  {
     switch (tipoUsuario) {
-      case 'Especialista':
+      case 'especialista':
         return '👨‍⚕️';
-      case 'Admin':
+      case 'administrador':
         return '🧑‍💻';
       default:
         return '🟢';

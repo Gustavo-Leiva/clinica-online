@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { AuthService } from '../../../services/auth.service';
@@ -12,6 +12,7 @@ import { AuthService } from '../../../services/auth.service';
   styleUrl: './registro-administrador.component.css'
 })
 export class RegistroAdministradorComponent implements OnInit {
+  @Input() mostrarHeader: boolean = true; // Mostrar header por defecto
   registroAdministradorForm: FormGroup;
   imagenPerfil1: File | null = null;
   isLoading: boolean = false;

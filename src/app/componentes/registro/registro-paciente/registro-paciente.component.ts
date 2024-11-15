@@ -3,13 +3,14 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { AuthService } from '../../../services/auth.service';
-import { FirebaseError } from 'firebase/app';  // Asegúrate de importar FirebaseError si usas Firebase
+import { FirebaseError } from 'firebase/app';
+import { HeaderComponent } from "../../header/header.component";  // Asegúrate de importar FirebaseError si usas Firebase
 /*importante si necesito trabajar con imagenes deberia poder subir a storage service */
 
 @Component({
   selector: 'app-registro-paciente',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, HeaderComponent],
   templateUrl: './registro-paciente.component.html',
   styleUrl: './registro-paciente.component.css'
 })

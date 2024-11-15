@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
+import { UsuariosService } from '../../../services/usuarios.service';
+import { Usuario,Especialista } from '../../interfaces/Usuario';
 
 @Component({
   selector: 'app-registro-especialista',
@@ -33,12 +35,14 @@ export class RegistroEspecialistaComponent implements OnInit {
   completed: boolean = false;
   submitted: boolean = false;
   msjError: string = '';
+  especialistasPendientes: Especialista[] = [];
+  // especialistas: Especialista[] = [];
   // file1?: File;
   // file2?: File;
 
   @Output() registrationCompleted = new EventEmitter<void>(); // Evento de finalización
 
-  constructor(private fb: FormBuilder, private authService: AuthService, ) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private usuarioService: UsuariosService) {
     this.registroEspecialistaForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[a-zA-Z\s]+$/)]],
       apellido: ['', [Validators.required, Validators.maxLength(20), Validators.pattern(/^[a-zA-Z\s]+$/)]],
@@ -48,23 +52,56 @@ export class RegistroEspecialistaComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]], // Validación de longitud mínima para contraseña
       imagenPerfil1: [null, Validators.required],
       especialidadSeleccionada: [null],
-      nuevaEspecialidad: ['']
+      nuevaEspecialidad: [''],
+      estado: ['pendiente']  // Agrega este campo con el valor por defecto 'pendiente'
       // especialidad: ['', Validators.required],
    
     });
   }
 
   ngOnInit(): void {
-    
+    this.obtenerEspecialistasPendientes();
   }
 
  
+  obtenerEspecialistasPendientes(): void {
+    this.usuarioService.getEspecialistasPendientes().subscribe((especialistas) => {
+      this.especialistasPendientes = especialistas;
+    });
+    console.log("  obtenerEspecialistasPendientes")
+  }
+
+
+  actualizarEstadoEspecialista(especialistaId: string, estado: 'aceptado' | 'rechazado'): void {
+    this.usuarioService.actualizarEstadoEspecialista(especialistaId, estado)
+      .then(() => {
+        this.obtenerEspecialistasPendientes();
+      })
+      .catch((error) => {
+        console.error("Error al actualizar el estado del especialista:", error);
+      });
+      console.log("funciona actualizarEstadoEspecialista")
+  }
+
 // Método para agregar especialidad
 agregarEspecialidadAlMedico() {
   const especialidadSeleccionada = this.registroEspecialistaForm.get('especialidadSeleccionada')?.value;
   if (especialidadSeleccionada && !this.especialidadesDelMedico.includes(especialidadSeleccionada)) {
     this.especialidadesDelMedico.push(especialidadSeleccionada);
     this.registroEspecialistaForm.get('especialidadSeleccionada')?.setValue(null); // Limpiar selección
+  }
+}
+
+
+// Método para agregar una nueva especialidad a la lista de opciones
+agregarNuevaEspecialidad() {
+  const nuevaEspecialidad = this.registroEspecialistaForm.get('nuevaEspecialidad')?.value?.trim();
+  if (nuevaEspecialidad && !this.especialidades.includes(nuevaEspecialidad)) {
+    this.especialidades.push(nuevaEspecialidad); // Agregar a la lista de opciones
+    this.especialidadesDelMedico.push(nuevaEspecialidad); // Asignar directamente al médico
+    this.registroEspecialistaForm.get('nuevaEspecialidad')?.setValue(''); // Limpiar campo
+  } else if (nuevaEspecialidad) {
+    alert('La especialidad ya existe o el campo está vacío.');
   }
 }
 
@@ -205,7 +242,8 @@ onSubmit() {
             password,
             tipoUsuario: 'especialista', // Tipo de usuario especialista
             especialidades: this.especialidadesDelMedico, // Especialidades del especialista
-            fotoPerfil1: url1 // URL de la única imagen de perfil
+            fotoPerfil1: url1, // URL de la única imagen de perfil
+            estado: 'pendiente'  // Incluir el estado aquí
           };
 
           // Llamamos al servicio de autenticación para registrar al usuario

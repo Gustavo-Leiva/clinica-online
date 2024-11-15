@@ -9,6 +9,7 @@ import { RegistroPacienteComponent } from './componentes/registro/registro-pacie
 import { RegistroEspecialistaComponent } from './componentes/registro/registro-especialista/registro-especialista.component';
 import { PanelAdminComponent } from './componentes/panel-admin/panel-admin.component';
 import { PanelPacienteComponent } from './componentes/panel-paciente/panel-paciente.component';
+import { PerfilComponent } from './componentes/perfil/perfil.component';
 import { adminGuard } from './guards/admin.guard'; // Asegúrate de que la ruta sea correcta
 import { GestionUsuariosComponent } from './componentes/gestion-usuarios/gestion-usuarios.component';
 
@@ -23,6 +24,7 @@ export const routes: Routes = [
     { path: 'registro/administrador', component: RegistroAdministradorComponent },
     { path:  'panelAdmin', component: PanelAdminComponent },
     { path:  'panelPaciente', component: PanelPacienteComponent },
+    { path:  'perfil', component: PerfilComponent },
     { path: 'error', component: ErrorComponent },
     { path: 'gestion-usuarios', component: GestionUsuariosComponent, canActivate: [adminGuard] }
     // Protege esta ruta

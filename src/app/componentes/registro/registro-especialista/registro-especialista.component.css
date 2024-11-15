@@ -100,7 +100,7 @@ button {
     padding: 4px 8px; /* Ajusta el tamaño del botón */
     font-size: 0.875rem; /* Reduce el tamaño del texto */
     line-height: 1.2;
-    width: 30%; /* Define el ancho del botón */
+    width: 100%; /* Define el ancho del botón */
     text-align: center; /* Centra el texto dentro del botón */
     margin: 10px 0 10px 0; /* Añade margen superior e inferior, sin centrarlo */
     margin-left: 0; /* Alinea el botón a la izquierda */

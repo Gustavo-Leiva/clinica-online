@@ -86,12 +86,20 @@
 }
 
 .profile-picture img {
-    width: 20%;
-    height: 20%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     border-radius: 50%;
+    text-align: center;
 }
 
+.profile-img {
+    width: 80px;  /* Ajusta el tamaño de la imagen según lo que necesites */
+    height: 80px; /* Ajusta la altura para que sea proporcional */
+    border-radius: 50%;  /* Si quieres que sea circular */
+    object-fit: cover;  /* Para asegurar que la imagen no se deforme */
+  }
+  
 /* Estilo de foto cuando no existe */
 .no-photo {
     display: flex;

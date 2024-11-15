@@ -7,26 +7,32 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from "../header/header.component";
 import { Router} from '@angular/router';
 // import * as XLSX from 'xlsx';
-import { IconosUsuarioPipe } from '../../pipes/iconos-usuario.pipe';
+// import { IconosUsuarioPipe } from '../../pipes/iconos-usuario.pipe';
 import { Turno } from '../interfaces/Turno';
 import { UsuariosService } from '../../services/usuarios.service';
 import { AuthService } from '../../services/auth.service';
 import { ExpandirHoverDirective } from '../../directivas/expandir-hover.directive';
+import { RegistroComponent } from '../registro/registro.component';
+import { RegistroPacienteComponent } from "../registro/registro-paciente/registro-paciente.component";
+import { RegistroEspecialistaComponent } from "../registro/registro-especialista/registro-especialista.component";
+import { RegistroAdministradorComponent } from "../registro/registro-administrador/registro-administrador.component";
+import { ResaltarFilaDirective } from '../../directivas/resaltar-fila.directive';
 
 
 @Component({
   selector: 'app-panel-admin',
   standalone: true,
   // imports: [CommonModule, HeaderComponent, IconosUsuarioPipe],
-  imports: [CommonModule, HeaderComponent, ExpandirHoverDirective],
+  imports: [CommonModule, HeaderComponent, ExpandirHoverDirective, RegistroComponent, RegistroPacienteComponent, RegistroEspecialistaComponent, RegistroAdministradorComponent, ResaltarFilaDirective],
   templateUrl: './panel-admin.component.html',
   styleUrl: './panel-admin.component.css'
 })
 export class PanelAdminComponent implements OnInit {
+
   usuarios: Array<Usuario |Paciente | Especialista | Administrador> = []; // Aquí declaras el array de usuarios
   especialistas: Especialista[] = [];  // Asegúrate de que sea un array
   flagAdmin: boolean = false;
-  mostrarUsuarios = true;
+  mostrarUsuarios = false;
   mostrarAceptarEspecialistas = false;
   mostrarRegistrarUsuarios = false;
   mostrarTurnos = false;
@@ -43,18 +49,72 @@ export class PanelAdminComponent implements OnInit {
       this.usuarioLogueado = usuario;
       this.flagAdmin = this.usuarioLogueado?.tipoUsuario === "administrador";
       console.log("flagAdmin:", this.flagAdmin);  // Verifica el valor de flagAdmin aquí
+      
+      this.cargarEspecialistasPendientes();
+       
     });
   }
 
-  cargarUsuarios() {
+
+  cargarUsuarios(): void {
     this.usuariosService.getUsuarios().subscribe((data) => {
-      this.usuarios = data;
-      console.log(this.usuarios);  // Verifica que los datos se cargan correctamente
-      this.usuarios.forEach((usuario) => {
-      console.log('Foto de perfil de usuario:', usuario.fotoPerfil1);  // Imprime la foto de perfil
+      this.usuarios = data.map((usuario) => {
+        return {
+          ...usuario,
+          uid: usuario.uid || '' // Asegúrate de que el UID esté presente
+        };
       });
+      console.log('Usuarios cargados:', this.usuarios);
     });
   }
+  
+
+
+  // cargarUsuarios() {
+  //   this.usuariosService.getUsuarios().subscribe((data) => {
+  //     this.usuarios = data;
+  //     console.log(this.usuarios);  // Verifica que los datos se cargan correctamente
+  //     this.usuarios.forEach((usuario) => {
+  //     console.log('Foto de perfil de usuario:', usuario.fotoPerfil1);  // Imprime la foto de perfil
+  //     });
+  //   });
+  // }
+
+  cargarEspecialistasPendientes() {
+    this.usuariosService.getEspecialistasPendientes().subscribe(data => {
+      // Filtrar especialistas pendientes en caso de que no lo haya hecho en el servicio
+      this.especialistas = data.filter(especialista => especialista.estado === 'pendiente');
+      console.log('Especialistas pendientes:', this.especialistas);
+    }, error => {
+      console.error('Error al obtener especialistas pendientes:', error);
+    });
+  }
+
+  isEspecialista(usuario: Usuario): Especialista | undefined {
+    if (usuario.tipoUsuario === 'especialista') {
+      return usuario as Especialista;
+    }
+    return undefined;
+  }
+
+  
+
+  // Función que se llama cuando se actualiza el estado del especialista
+  actualizarEstadoEspecialista(uid: string, estado: 'aceptado' | 'rechazado'): void {
+    this.usuariosService.actualizarEstadoEspecialista(uid, estado)
+      .then(() => {
+        console.log(`Estado del especialista con UID: ${uid} actualizado a ${estado}`);
+      })
+      .catch((error) => {
+        console.error('Error al actualizar el estado', error);
+      });
+  }
+
+  
+
+
+  
+ 
 
    // Método para navegar a un destino específico
    NavegarRegistro() {
