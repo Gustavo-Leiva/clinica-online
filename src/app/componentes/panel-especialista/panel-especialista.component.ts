@@ -6,12 +6,16 @@ import Swal from 'sweetalert2';
 import { animations } from '../../animations/animations';
 import { UsuariosService } from '../../services/usuarios.service';
 import { Usuario,Especialista } from '../interfaces/Usuario';
+import { IconosUsuarioPipe } from '../../pipes/iconos-usuario.pipe';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { EstadoTurnoPipe } from '../../pipes/estado-turno.pipe';
 
 
 @Component({
   selector: 'app-panel-especialista',
   standalone: true,
-  imports: [],
+  imports: [IconosUsuarioPipe,EstadoTurnoPipe, CommonModule, FormsModule],
   templateUrl: './panel-especialista.component.html',
   styleUrl: './panel-especialista.component.css'
 })
@@ -230,17 +234,26 @@ export class PanelEspecialistaComponent implements OnInit {
       this.turnosService.getTurnosAceptadosByEspecialista(this.usuarioLogueado.dni.toString())
         .subscribe(turnos => {
           const pacientesConTurnos = turnos.map(turno => turno.pacienteDni);
-
-          console.log("Pacientes con turno",pacientesConTurnos);
-
+  
+          console.log("Pacientes con turno", pacientesConTurnos);
+  
           this.usuariosService.getUsuarios()
             .subscribe(
               (usuarios: Usuario[]) => {
-                console.log("Isiarops", usuarios);
+                console.log("Usuarios obtenidos", usuarios);
                 this.pacientes = usuarios.filter((usuario: Usuario) => {
-                  return usuario.aceptado == "true" && pacientesConTurnos.includes(usuario.dni.toString());
+                  // Verifica si el usuario es especialista antes de acceder a "estado"
+                  if (usuario.tipoUsuario === 'especialista') {
+                    const especialista = usuario as Especialista;
+                    return especialista.estado === 'aceptado' && pacientesConTurnos.includes(especialista.dni.toString());
+                  } 
+                  // Si es paciente, incluye en el filtro por su dni
+                  if (usuario.tipoUsuario === 'paciente') {
+                    return pacientesConTurnos.includes(usuario.dni.toString());
+                  }
+                  return false; // Excluye otros tipos de usuario
                 });
-                console.log("Pacientes",this.pacientes);
+                console.log("Pacientes", this.pacientes);
               },
               (error) => {
                 console.log('Error al obtener los usuarios:', error);
@@ -249,6 +262,7 @@ export class PanelEspecialistaComponent implements OnInit {
         });
     }
   }
+
 
   mostrarDatos(usuario: Usuario) {
   

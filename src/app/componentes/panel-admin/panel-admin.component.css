@@ -227,6 +227,53 @@
     text-align: center;
   }
   
+  .botones-doctores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem; /* Espaciado entre botones */
+    justify-content: center;
+  }
+  
+  .btn-doctores {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9; /* Color de fondo */
+    border: 2px solid #ddd; /* Borde */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+    transition: transform 0.2s, box-shadow 0.2s; /* Animaciones */
+    width: 150px; /* Ancho del botón */
+  }
+  
+  .btn-doctores:hover {
+    transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .imagen-container {
+    width: 100px; /* Ancho de la imagen */
+    height: 100px; /* Alto de la imagen */
+    border-radius: 50%; /* Hace la imagen circular */
+    overflow: hidden; /* Oculta el exceso de la imagen */
+    margin-bottom: 10px; /* Espaciado entre la imagen y el texto */
+    border: 2px solid #ddd; /* Borde alrededor de la imagen */
+  }
+  
+  .imagen-doctores {
+    width: 100%; /* La imagen ocupa todo el contenedor */
+    height: 100%; /* La imagen ocupa todo el contenedor */
+    object-fit: cover; /* Ajusta la imagen para que se vea completa */
+  }
+  
+  .texto-doctores {
+    font-size: 14px; /* Tamaño de texto */
+    font-weight: bold; /* Negrita */
+    text-align: center; /* Centrado */
+    color: #333; /* Color del texto */
+  }
+  
   
   
   

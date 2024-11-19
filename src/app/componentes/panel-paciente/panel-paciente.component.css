@@ -75,13 +75,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%; /* Circular */
 }
 
 /* Imagen dentro del botón */
 .imagen-especialidad {
   max-width: 100%; /* Asegura que la imagen no se deforme */
   max-height: 100%;
-  object-fit: cover; /* Ajusta la imagen para que cubra el contenedor sin distorsión */
+  object-fit: contain; /* Ajusta la imagen para que cubra el contenedor sin distorsión */
 }
 
 /* Texto de la especialidad */

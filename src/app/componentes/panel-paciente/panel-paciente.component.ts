@@ -32,14 +32,27 @@ export class PanelPacienteComponent implements OnInit{
 
   especialidades: Especialidad[] = [
    
-    { nombre: 'Dermatologo', imagen: '/assets/imagenes/especialidades/dermatologo.png' },
-    { nombre: 'Pediatra', imagen: '/assets/imagenes/especialidades/pediatra.jpg' },
-    { nombre: 'Neurologo', imagen: '/assets/imagenes/especialidades/neurologo.jpg' },
-    { nombre: 'Oftalmologo', imagen: '/assets/imagenes/especialidades/oftalmologo.png' },
-    { nombre: 'Cardiologo', imagen: '/assets/imagenes/especialidades/cardiologo.jpg' },
-    { nombre: 'Psicologo', imagen: '/assets/imagenes/especialidades/psicologo.jpg' },
-    { nombre: 'Endocrinolgo', imagen: '/assets/imagenes/especialidades/default-image.png' },
+    { nombre: 'Cardiología', imagen: '/assets/imagenes/especialidades/cardiologo.jpg' },
+    { nombre: 'Dermatologia', imagen: '/assets/imagenes/especialidades/dermatologo.png' },
+    { nombre: 'Neurología', imagen: '/assets/imagenes/especialidades/neurologo.jpg' },
+    { nombre: 'Pediatría', imagen: '/assets/imagenes/especialidades/pediatra.jpg' },
+    { nombre: 'Psicología', imagen: '/assets/imagenes/especialidades/psicologo.jpg' },
+    { nombre: 'Psiquiatría', imagen: '/assets/imagenes/especialidades/psiquiatra.jpg' },
+    { nombre: 'Traumatología', imagen: '/assets/imagenes/especialidades/traumatologo.jpg' },
+    { nombre: 'Oftalmología', imagen: '/assets/imagenes/especialidades/oftalmologo.png' },
+    { nombre: 'Endocrinología', imagen: '/assets/imagenes/especialidades/default-image.png' },
 
+
+    // 'Cardiología',
+    // 'Dermatología',
+    // 'Neurología',
+    // 'Pediatría',
+    // 'Ginecología',
+    // 'Oncología',
+    // 'Psiquiatría',
+    // 'Traumatología',
+    // 'Oftalmología',
+    // 'Endocrinología'
 
   ];
 
@@ -74,21 +87,49 @@ export class PanelPacienteComponent implements OnInit{
     this.mostrarReservarTurno= true;
   }
 
-  
   cargarDoctores() {
+    console.log("Especialidad seleccionada:", this.especialidadSeleccionada);
+    if (!this.especialidadSeleccionada) {
+      console.error("No se ha seleccionado una especialidad.");
+      return;
+    }
+  
     console.log("Cargando Doctores...");
-    this.usuariosService.getEspecialistaByEspecialidad(this.especialidadSeleccionada || '')
-      .subscribe(doctores => {
-        if (Array.isArray(doctores)) {
-          this.doctores = doctores;
-        } else {
-          this.doctores = [];  // Aseguramos que sea un array vacío si la respuesta es incorrecta
+    this.usuariosService.getEspecialistaByEspecialidad(this.especialidadSeleccionada)
+      .subscribe(
+        doctores => {
+          if (Array.isArray(doctores)) {
+            this.doctores = doctores;
+          } else {
+            console.warn("Respuesta inesperada:", doctores);
+            this.doctores = [];
+          }
+          this.dniDoctorSeleccionado = "";
+          this.fechaSeleccionada = "";
+          this.horaSeleccionada = "";
+          console.log("Doctores cargados:", this.doctores);
+        },
+        error => {
+          console.error("Error al cargar doctores:", error);
         }
-        this.dniDoctorSeleccionado = "";
-        this.fechaSeleccionada = "";
-        this.horaSeleccionada = "";
-      });
+      );
   }
+  
+  
+  // cargarDoctores() {
+  //   console.log("Cargando Doctores...");
+  //   this.usuariosService.getEspecialistaByEspecialidad(this.especialidadSeleccionada || '')
+  //     .subscribe(doctores => {
+  //       if (Array.isArray(doctores)) {
+  //         this.doctores = doctores;
+  //       } else {
+  //         this.doctores = [];  // Aseguramos que sea un array vacío si la respuesta es incorrecta
+  //       }
+  //       this.dniDoctorSeleccionado = "";
+  //       this.fechaSeleccionada = "";
+  //       this.horaSeleccionada = "";
+  //     });
+  // }
   
 
 
