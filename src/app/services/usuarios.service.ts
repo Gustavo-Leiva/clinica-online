@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import {  Firestore, collection, collectionData, query, where, getDocs, updateDoc, doc, getDoc } from '@angular/fire/firestore';
+import {  Firestore, collection, collectionData, query, where, getDocs, updateDoc, doc, getDoc, QuerySnapshot, DocumentData} from '@angular/fire/firestore';
 import{Usuario, Paciente, Especialista, Administrador} from '../componentes/interfaces/Usuario'
 import { tap } from 'rxjs/operators';
 import { inject } from '@angular/core';  // Si usas Angular Injection
 import { AngularFirestore, AngularFirestoreCollection} from '@angular/fire/compat/firestore';
 import { BehaviorSubject, Observable, map, from } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,10 @@ export class UsuariosService {
 
   constructor(private firestore: Firestore) { }
 
-  
+  get db() {
+    return this.firestore;
+  }
+
   
   // Método para obtener todos los usuarios
   getUsuarios(): Observable<Usuario[]> {
@@ -85,14 +89,62 @@ async actualizarEstadoEspecialista(uid: string, estado: 'aceptado' | 'rechazado'
 
 
 
-  // getEspecialistaByEspecialidad(especialidad: string): Observable<Usuario[]> {
-  //   return this.usuarioColleccion
-  //     .valueChanges()
-  //     .pipe(
-  //       map((usuarios: Usuario[]) => usuarios.filter((usuario: Usuario) => usuario.especialidad === especialidad))
-  //     );
-  // }
+  getEspecialistaByEspecialidad(especialidad: string) {
+    // Crea una referencia a la colección de usuarios
+    const usuariosRef = collection(this.firestore, 'usuarios');
+    
+    // Realiza la consulta filtrando por especialidad y tipoUsuario
+    const q = query(usuariosRef, 
+      where('tipoUsuario', '==', 'especialista'),
+      where('especialidades', 'array-contains', especialidad)
+    );
 
+    // Obtén los documentos de la consulta
+    return from(getDocs(q)).pipe(
+      map((querySnapshot) => {
+        // Mapea los documentos a la estructura de Especialista
+        return querySnapshot.docs.map(doc => doc.data() as Especialista);
+      })
+    );
+  }
+
+
+  
+ // Actualizar disponibilidad
+ actualizarDisponibilidad(usuario: Usuario, horarios: Array<string>, dias: Array<string>): void {
+  const usuariosRef = collection(this.firestore, 'usuarios');
+
+  const q = query(
+    usuariosRef,
+    where('dni', '==', usuario.dni),
+    where('nombre', '==', usuario.nombre),
+    where('apellido', '==', usuario.apellido),
+    where('email', '==', usuario.email)
+  );
+
+  getDocs(q).then((querySnapshot: QuerySnapshot<DocumentData>) => {
+    querySnapshot.forEach(docSnapshot => {
+      const usuarioDocRef = doc(this.firestore, `usuarios/${docSnapshot.id}`);
+      updateDoc(usuarioDocRef, {
+        horariosAtencion: horarios,
+        diasAtencion: dias
+      })
+        .then(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Disponibilidad Actualizada...',
+            text: 'Se actualizó la disponibilidad',
+          });
+        })
+        .catch(error => {
+          console.error('Error al actualizar:', error);
+        });
+    });
+  }).catch(error => {
+    console.error('Error al consultar documentos:', error);
+  });
+}
+  
  // Actualizar el estado de un especialista (aceptar o rechazar)
 //  actualizarEstadoEspecialista(id: string, nuevoEstado: 'aceptado' | 'rechazado'): Promise<void> {
 //   const especialistaDocRef = doc(this.firestore, `usuarios/${id}`);

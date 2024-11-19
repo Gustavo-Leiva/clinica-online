@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { AuthService } from '../../../services/auth.service';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-registro-administrador',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule,],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, RecaptchaModule,],
   templateUrl: './registro-administrador.component.html',
   styleUrl: './registro-administrador.component.css'
 })
@@ -20,6 +21,7 @@ export class RegistroAdministradorComponent implements OnInit {
   submitted: boolean = false;
   msjError: string = '';
   flagError: boolean = false;
+  captchaResolved = signal(false);  // Usamos signal para almacenar el estado
 
   @Output() registrationCompleted = new EventEmitter<void>(); // Evento de finalización
 
@@ -53,6 +55,15 @@ export class RegistroAdministradorComponent implements OnInit {
   }
   }
 
+  
+   // Este método se ejecuta cuando el usuario resuelve el captcha
+ onCaptchaResolved(response: string | null): void {
+  if (response) {
+    this.captchaResolved.set(true);  // Cambia el estado del captcha a resuelto
+  } else {
+    this.captchaResolved.set(false); // Si no se resuelve el captcha, aseguramos que el estado sea falso
+  }
+}
   // onSubmit() {
   //   this.submitted = true;
   
@@ -111,6 +122,12 @@ export class RegistroAdministradorComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
   
+       // Verificar si el captcha está resuelto
+       if (!this.captchaResolved()) {
+        console.log("Por favor, resuelve el captcha.");
+        return; // Detener el submit si el captcha no está resuelto
+       }
+       
     // Depuración: Verificamos cada condición
     console.log("Formulario válido:", this.registroAdministradorForm.valid);
     console.log("Imagen de perfil cargada:", this.imagenPerfil1);

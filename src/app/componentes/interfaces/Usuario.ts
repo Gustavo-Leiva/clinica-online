@@ -54,6 +54,10 @@ export interface Paciente extends Usuario {
 export interface Especialista extends Usuario {
   tipoUsuario: 'especialista';  // Especifica que es un especialista
   especialidades: string[];  // Array de especialidades
+  // especialidades: { 
+  //   nombre: string; 
+  //   imagen: string; 
+  // }[]; // Array de especialidades con nombre e imagen
   estado: 'pendiente' | 'aceptado' | 'rechazado'; // Estado específico para especialistas
   diasAtencion?: Array<string>;
   horariosAtencion?: Array<string>;

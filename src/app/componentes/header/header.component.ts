@@ -7,12 +7,14 @@ import { ExpandirHoverDirective } from '../../directivas/expandir-hover.directiv
 import { Router} from '@angular/router';
 import Swal from 'sweetalert2';
 
+
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [CommonModule, ExpandirHoverDirective, IconosUsuarioPipe],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrl: './header.component.css',
+  
 })
 export class HeaderComponent  implements OnInit {
   usuarioLogueado: any = null;
@@ -92,6 +94,11 @@ isEspecialista(usuario: Usuario): usuario is Especialista {
      // Método para navegar a un destino específico
      NavegarPanelPaciente() {
       this.router.navigate(['/panelPaciente']); // Esto navega al componente de resultados
+    }
+
+     // Método para navegar a un destino específico
+     NavegarPanelEspecialista() {
+      this.router.navigate(['/panelEspecialista']); // Esto navega al componente de resultados
     }
 
       // Método para navegar a un destino específico

@@ -262,7 +262,7 @@ label {
     background-color: #0056b3; /* Cambio de color al pasar el ratón */
 }
 
-/*  Asegura que el botón de cierre esté en la esquina superior izquierda */ */
+/*  Asegura que el botón de cierre esté en la esquina superior izquierda */
 .close-modal {
     position: absolute;
     top: 10px;

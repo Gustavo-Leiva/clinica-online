@@ -1,9 +1,13 @@
 <app-header></app-header>
 
-<div class = 'paciente-container' style="margin-bottom: 450px;">
+<div class='container' style="margin-bottom: 50px;">
+
+  <!-- Muestra los titulos de reserva de turnos, historial de turnos e historia clinica  -->
   <div class="row">
+
     <div class="col-md-4">
-      <div class="menu-option-card" (click)="mostrarReservarTurno = true; mostrarProximosTurnos = false;mostrarHistorialClinico = false; cargarHorarios(this.dniDoctorSeleccionado,this.fechaSeleccionada)">
+      <div class="menu-option-card"
+        (click)="mostrarReservarTurno = true; mostrarProximosTurnos = false;mostrarHistorialClinico = false; cargarHorarios(this.dniDoctorSeleccionado,this.fechaSeleccionada)">
         <div class="menu-option-content">
           <i class="fas fa-calendar-plus"></i>
           <h4>Reservar Turno</h4>
@@ -11,7 +15,8 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="menu-option-card" (click)="mostrarProximosTurnos = true; mostrarReservarTurno = false;mostrarHistorialClinico=false; cargarProximosTurnos()">
+      <div class="menu-option-card"
+        (click)="mostrarProximosTurnos = true; mostrarReservarTurno = false;mostrarHistorialClinico=false; cargarProximosTurnos()">
         <div class="menu-option-content">
           <i class="fa-solid fa-business-time"></i>
           <h4 *ngIf="this.usuarioLogueado?.tipoUsuario == 'paciente'">Mis Turnos</h4>
@@ -20,7 +25,8 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="menu-option-card" (click)="mostrarProximosTurnos=false;mostrarHistorialClinico = true; mostrarReservarTurno = false; cargarHistorialClinico()">
+      <div class="menu-option-card"
+        (click)="mostrarProximosTurnos=false;mostrarHistorialClinico = true; mostrarReservarTurno = false; cargarHistorialClinico()">
         <div class="menu-option-content">
           <i class="fas fa-file-medical-alt"></i>
           <h4>Historial Atenciones</h4>
@@ -29,18 +35,104 @@
     </div>
   </div>
 
-<!-- </div> -->
- <!-- Selección de Especialidad -->
- <!-- <div class="form-group">
-  <label for="especialidad">Selecciona una especialidad:</label>
-  <div class="botones-especialidades">
-    <button appHighlightElement appExpandirHover *ngFor="let especialidad of especialidades" class="btn-especialidad"
-      (click)="especialidadSeleccionada = especialidad.nombre; cargarDoctores()"
-      [ngClass]="{'selected': especialidad.nombre == especialidadSeleccionada}">
-      <div class="imagen-container">
-        <img appDefaultImage [src]="especialidad.imagen" alt="{{especialidad.nombre}}" class="imagen-especialidad" />
+
+  <div class="content">
+    
+    <div [@deslizarAbajo] class="reservar-turno" *ngIf="mostrarReservarTurno">
+      <div class="form-container">
+        <h2>Reservar Turno</h2>
+
+        <!-- Selección de Paciente -->
+        <div class="form-group" *ngIf="pacientes.length > 0 && this.usuarioLogueado?.tipoUsuario == 'Admin'">
+          <label for="doctor">Selecciona un Paciente:</label>
+          <div class="botones-doctores">
+            <button appHighlightElement appExpandOnHover *ngFor="let paciente of pacientes" class="btn-doctores"
+              (click)="pacienteSeleccionado = paciente;"
+              [ngClass]="{'selected': paciente.dni == pacienteSeleccionado.dni}"
+              >
+              <div class="imagen-container">
+                <img appDefaultImage [src]="paciente.fotoPerfil1" alt="{{paciente.nombre}}" class="imagen-doctores" />
+              </div>
+              <div class="texto-doctores">{{ paciente.nombre }} {{ paciente.apellido }}</div>
+            </button>
+          </div>
+        </div>
+
+
+        <!-- Selección de Especialidad -->
+        <div class="form-group">
+          <label for="especialidad">Selecciona una especialidad:</label>
+          <div class="botones-especialidades">
+            <button appExpandirHover *ngFor="let especialidad of especialidades" class="btn-especialidad"
+              (click)="especialidadSeleccionada = especialidad.nombre; cargarDoctores()"
+              [ngClass]="{'selected': especialidad.nombre == especialidadSeleccionada}">
+              <div class="imagen-container">
+                <img appDefaultImage [src]="especialidad.imagen" alt="{{especialidad.nombre}}"
+                  class="imagen-especialidad" />
+              </div>
+              <div class="texto-especialidad">{{ especialidad.nombre }}</div>
+            </button>
+          </div>
+        </div>
+
+
+        <!-- Selección de Doctor -->
+        <div class="form-group" *ngIf="doctores && doctores.length > 0">
+          <label for="doctor">Selecciona un doctor:</label>
+          <div class="botones-doctores">
+            <button appExpandirHover *ngFor="let doctor of doctores" class="btn-doctores"
+              (click)="dniDoctorSeleccionado = doctor.dni ?? ''; generarFechas(dniDoctorSeleccionado)"
+              [ngClass]="{'selected': doctor.dni == dniDoctorSeleccionado}">
+
+              <div class="imagen-container">
+                <img appDefaultImage [src]="doctor.fotoPerfil1" alt="{{doctor.nombre}}" class="imagen-doctores" />
+              </div>
+              <div class="texto-doctores">{{ doctor.nombre }} {{ doctor.apellido }}</div>
+            </button>
+          </div>
+        </div>
+
+
+        <!-- Selección de Fecha -->
+        <div class="form-group" *ngIf="dniDoctorSeleccionado">
+          <label for="fecha">Selecciona una Fecha:</label>
+          <div class="botones-fechas">
+            <button appExpandirHover *ngFor="let fecha of fechas" class="btn-fecha"
+              (click)="this.fechaSeleccionada = fecha; this.cargarHorarios(this.dniDoctorSeleccionado,fecha)"
+              [ngClass]="{'selected': fecha == fechaSeleccionada}">
+              {{ fecha }}
+            </button>
+          </div>
+        </div>
+
+
+        <!-- Horarios Disponibles -->
+        <div *ngIf="fechaSeleccionada">
+          <label>Horarios Disponibles</label>
+          <div class="botones-horarios">
+            <button appExpandOnHover *ngFor="let horario of arrayHorarios" class="btn-horario"
+              [class.btn-success]="horario.estado == 'disponible'" [class.btn-danger]="horario.estado == 'ocupado'"
+              [disabled]="horario.estado == 'ocupado'" (click)="reservarTurno(horario.horario)">
+              <p>{{ horario.horario | horaFormato }}</p>
+            </button>
+          </div>
+        </div>
+
       </div>
-      <div class="texto-especialidad">{{ especialidad.nombre }}</div>
-    </button>
-  </div>
-</div> -->
+    </div>
+
+
+
+
+
+
+
+
+
+     
+  
+
+
+
+
+</div>

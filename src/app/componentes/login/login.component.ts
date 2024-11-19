@@ -7,12 +7,16 @@ import { FirebaseError } from 'firebase/app';
 import { HeaderComponent } from "../header/header.component"; // Asegúrate de importar FirebaseError
 
 
+
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [FormsModule, CommonModule, HeaderComponent],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+ 
+
+  
 })
 export class LoginComponent {
   email: string = '';
@@ -40,6 +44,7 @@ export class LoginComponent {
 
 
   constructor(private router: Router, private auth: AuthService) {}
+  
   async LoginUser() {
     this.isLoading = true;
     this.flagError = false;
@@ -53,34 +58,32 @@ export class LoginComponent {
         console.log('Usuario autenticado:', user);
   
         // Verificación de tipo de usuario
-        if (user.tipoUsuario === 'especialista') {
-          if (user.aprobado && user.emailVerificado) {
+        if (!user.emailVerificado) {
+          // Si el correo no está verificado, mensaje genérico de error
+          this.flagError = true;
+          this.msjError = "Error de autenticación desconocido. Intente nuevamente";
+        } else if (user.tipoUsuario === 'especialista') {
+          // Si es especialista, verificar estado y redirigir
+          if (user.estado === 'aceptado') {
             this.router.navigate(['/home']);
           } else {
             this.flagError = true;
-            this.msjError = 'La cuenta de Especialista no está aprobada o el email no está verificado.';
-            
+            this.msjError = 'Estado pendiente de aprobación por administrador.';
           }
         } else if (user.tipoUsuario === 'paciente') {
-          if (user.emailVerificado) {
-            this.router.navigate(['/home']);
-          } else {
-            this.flagError = true;
-            this.msjError = 'La cuenta de Paciente no tiene el email verificado.';
-          
-          }
-        } else if (user.tipoUsuario === 'administrador'&& user.emailVerificado) {
+          // Pacientes solo requieren email verificado
+          this.router.navigate(['/home']);
+        } else if (user.tipoUsuario === 'administrador') {
+          // Administradores solo requieren email verificado
           this.router.navigate(['/admin-dashboard']);
         } else {
           this.flagError = true;
           this.msjError = 'Perfil de usuario no reconocido.';
-          
         }
       } else {
         this.flagError = true;
         this.msjError = 'No se pudo obtener la información del usuario.';
       }
-  
     } catch (e: any) {
       console.error('Error de inicio de sesión:', e);
       this.flagError = true;
@@ -95,7 +98,7 @@ export class LoginComponent {
       this.isLoading = false;
     }
   }
-
+  
 
 
   // Método para alternar la visibilidad de la lista de usuarios

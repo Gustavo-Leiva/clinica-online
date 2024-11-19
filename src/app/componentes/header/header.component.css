@@ -73,7 +73,8 @@
   .btn.informes, 
   .btn.perfil, 
   .btn.btn.admin,
-  .btn.btn.paciente {
+  .btn.btn.paciente,
+  .btn.btn.especialista {
   
     /* background: linear-gradient(135deg, #6a1b9a, #ec0584); Gradiente de morado a rosa */
     background: linear-gradient(135deg, #38b6ff, #43d1af);
@@ -103,7 +104,8 @@
   .btn.btn.informes:hover,
   .btn.btn.perfil:hover, 
   .btn.btn.admin:hover,
-  .btn.btn.paciente:hover
+  .btn.btn.paciente:hover,
+  .btn.btn.especialista:hover
   {
     background: linear-gradient(135deg, #43d1af, #38b6ff); /* Inversión del gradiente */
     /* transform: translateY(-2px); Efecto de elevación al pasar el mouse */

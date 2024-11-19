@@ -1,5 +1,6 @@
 
 <!-- registro.component.html -->
+ <!-- lo coloco para que en el componente admin no se vuelva a mostrar el header -->
 <div *ngIf="mostrarHeader">
   <app-header></app-header>
 </div>
@@ -8,13 +9,13 @@
 <body> 
 
 
-<div class="registro-container">
+<div  class="registro-container">
   <h1 class="registro-titulo">Registro de usuarios</h1>
   <div class="role-selection">
-    <button (click)="selectRole('paciente')" class="role-button">
-      <img src="assets/imagenes/paciente.png" alt="Paciente" />
+    <button [@deslizarAbajo] (click)="selectRole('paciente')" class="role-button">
+      <img  src="assets/imagenes/paciente.png" alt="Paciente" />
     </button>
-    <button (click)="selectRole('especialista')" class="role-button">
+    <button [@deslizarAbajo] (click)="selectRole('especialista')" class="role-button">
       <img src="assets/imagenes/especialista.png" alt="Especialista" />
     </button>
 

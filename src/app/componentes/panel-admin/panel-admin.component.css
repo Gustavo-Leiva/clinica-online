@@ -93,15 +93,18 @@
     text-align: center;
 }
 
+/*
 .profile-img {
-    width: 80px;  /* Ajusta el tamaño de la imagen según lo que necesites */
-    height: 80px; /* Ajusta la altura para que sea proporcional */
-    border-radius: 50%;  /* Si quieres que sea circular */
-    object-fit: cover;  /* Para asegurar que la imagen no se deforme */
+    width: 80px;   Ajusta el tamaño de la imagen según lo que necesites 
+    height: 80px;  Ajusta la altura para que sea proporcional
+    border-radius: 50%;  Si quieres que sea circular 
+    object-fit: cover;   Para asegurar que la imagen no se deforme 
   }
+*/
+  
   
 /* Estilo de foto cuando no existe */
-.no-photo {
+/* .no-photo {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -110,25 +113,9 @@
     border-radius: 50%;
     background-color: #ccc;
     color: #fff;
-}
+} */
 
-/* Imagen del perfil */
-.profile-picture-list {
-    width: 60px; /* Tamaño ajustado para la imagen */
-    height: 60px; /* Tamaño ajustado para la imagen */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .profile-picture-list img {
-    width: 100%; /* Hace que la imagen ocupe el 100% del contenedor */
-    height: 100%; /* Hace que la imagen ocupe el 100% del contenedor */
-    object-fit: cover; /* Hace que la imagen se recorte si no es cuadrada */
-    border-radius: 50%; /* Hace la imagen redonda */
-  }
-
-  .no-photo {
+  /* .no-photo {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -138,7 +125,25 @@
     background-color: #ccc;
     color: #fff;
     font-size: 14px;
+  } */
+
+
+/* Imagen del perfil */
+/* .profile-picture-list {
+    width: 60px; 
+    height: 60px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  } */
+
+  .profile-picture-list img {
+    width: 100%; /* Hace que la imagen ocupe el 100% del contenedor */
+    height: 100%; /* Hace que la imagen ocupe el 100% del contenedor */
+    object-fit: cover; /* Hace que la imagen se recorte si no es cuadrada */
+    border-radius: 50%; /* Hace la imagen redonda */
   }
+
 
 /* Para la animación de la carga */
 @keyframes rotate-center {
@@ -178,7 +183,50 @@
     margin: 5px 0;
 }
 
-
+.user-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Espacio entre cada usuario */
+    justify-content: start;
+  }
+  
+  .user-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px; /* Puedes ajustar el tamaño según sea necesario */
+  }
+  
+  .profile-picture-list {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+  }
+  
+  .profile-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%; /* Esto hace que la imagen sea circular */
+    object-fit: cover; /* Asegura que la imagen se recorte para mantener la proporción */
+  }
+  
+  .no-photo {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ddd; /* Fondo gris para cuando no haya foto */
+    border-radius: 50%;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .user-details {
+    text-align: center;
+  }
+  
   
   
   

@@ -113,9 +113,20 @@
         {{ msjError }}
     </div>
 
-      
-      <button type="submit" class="submit-btn">Registrar Paciente</button>
+      <!-- Componente de reCAPTCHA -->
+  <div class="captcha-container">
+    <re-captcha
+      [siteKey]="'6LcLYYAqAAAAACyoV42nKfn-mCliBr_R_Jp4t7_m'"
+      (resolved)="onCaptchaResolved($event)"
+    ></re-captcha>
+     <div *ngIf="submitted && !captchaResolved()">
+      <small class="error-message">Por favor, resuelve el captcha.</small>
+    </div>       
+     
+   </div>
 
+    <button type="submit" [disabled]="!captchaResolved()" class="submit-btn">Registrar Paciente</button>
+    <!-- <button type="submit" captchaResolved() class="submit-btn">Registrar Paciente</button> -->
    
     </form>
     

@@ -5,12 +5,15 @@ import { RegistroAdministradorComponent } from './registro-administrador/registr
 import { RegistroPacienteComponent } from './registro-paciente/registro-paciente.component';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+
+
 @Component({
   selector: 'app-registro',
   standalone: true,
   imports: [CommonModule, HeaderComponent, RegistroEspecialistaComponent, RegistroPacienteComponent, RegistroAdministradorComponent],
   templateUrl: './registro.component.html',
-  styleUrl: './registro.component.css'
+  styleUrl: './registro.component.css',
+ 
 })
 export class RegistroComponent {
   @Input() mostrarHeader: boolean = true; // Mostrar header por defecto

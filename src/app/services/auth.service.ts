@@ -109,7 +109,7 @@ async login(email: string, password: string): Promise<User> {
     if (!res.user.emailVerified) {
       this.msjError = 'Por favor, verifica tu correo electrónico antes de iniciar sesión.';
       throw new Error(this.msjError);
-      this.logoutEstatico();
+     
     }
 
     // Si el correo está verificado, continuar con el proceso de inicio de sesión
@@ -121,6 +121,12 @@ async login(email: string, password: string): Promise<User> {
       if (tipoDeUsuario === 'paciente') {
         this.router.navigate(['/home']); // Redirigir a la página de inicio del paciente
       } else if (tipoDeUsuario === 'especialista') {
+        // Verificar el estado del especialista (pendiente/aprobado)
+        const estadoEspecialista = await this.obtenerEstadoEspecialista(uid);
+        if (estadoEspecialista !== 'aceptado') {
+          this.msjError = 'Su cuenta aún no ha sido aprobada por el administrador.';
+          throw new Error(this.msjError);
+        }
         this.router.navigate(['/home']); // Redirigir a la página de inicio del especialista
       } else if (tipoDeUsuario === 'administrador') {
         this.router.navigate(['/home']); // Redirigir a la página de administrador
@@ -138,6 +144,21 @@ async login(email: string, password: string): Promise<User> {
   }
 }
 
+async obtenerEstadoEspecialista(uid: string): Promise<string | null> {
+  try {
+    const usuarioRef = doc(this.firestore, `usuarios/${uid}`);
+    const usuarioSnap = await getDoc(usuarioRef);
+
+    if (usuarioSnap.exists()) {
+      const datos = usuarioSnap.data();
+      return datos['estado'] || null; // Asegúrate de que el campo 'estado' esté configurado en Firebase.
+    }
+    return null;
+  } catch (error) {
+    console.error('Error al obtener el estado del especialista:', error);
+    return null;
+  }
+}
 
   
   // Método para mostrar mensaje de error según el código de error

@@ -111,10 +111,6 @@
                     </button>
                 </div>
 
-                <!-- Mensaje de error si no hay especialidades agregadas -->
-                <div *ngIf="submitted && especialidadesDelMedico.length === 0" class="error-message">
-                    Debe seleccionar al menos una especialidad.
-                </div>
             </div>
 
             <!-- Especialidades seleccionadas -->
@@ -132,9 +128,13 @@
                 </ul>
             </div>
 
+          
 
-
-
+       
+        <!-- Mensaje de error si no hay especialidades agregadas -->
+        <div *ngIf="submitted && especialidadesDelMedico.length === 0" class="error-message">
+            Debe seleccionar al menos una especialidad.
+        </div>
 
 
             <!-- Email y Contraseña -->
@@ -190,8 +190,23 @@
                 {{ msjError }}
             </div>
 
+            
+      <!-- Componente de reCAPTCHA quitado para probar altas.-->
+        < <div class="captcha-container">
+            <re-captcha
+            [siteKey]="'6LcLYYAqAAAAACyoV42nKfn-mCliBr_R_Jp4t7_m'"
+            (resolved)="onCaptchaResolved($event)"
+            ></re-captcha>
+            <div *ngIf="submitted && !captchaResolved()">
+            <small class="error-message">Por favor, resuelve el captcha.</small>
+            </div>       
+            
+        </div>
 
-            <button type="submit" class="submit-btn">Registrar Especialista</button>
+      <button type="submit" [disabled]="!captchaResolved()" class="submit-btn">Registrar Especialista</button> -->
+   
+
+            <!-- <button type="submit" class="submit-btn">Registrar Especialista</button> -->
         </form>
 
         <div *ngIf="isLoading" class="spinner-container">

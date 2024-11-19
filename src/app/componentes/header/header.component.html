@@ -37,7 +37,7 @@
         </li>
 
         <!-- Enlaces cuando NO está logueado -->
-        <li *ngIf="!usuarioLogueado" appExpandirHover>
+        <li *ngIf="!usuarioLogueado"  appExpandirHover>
           <a href="/login" class="btn login"><strong> 📤 Ingresar</strong></a>
         </li>
         <li *ngIf="!usuarioLogueado" appExpandirHover>
@@ -58,7 +58,7 @@
  
         <!-- Enlaces para especialista -->
         <li *ngIf="usuarioLogueado?.tipoUsuario === 'especialista'" appExpandirHover>
-          <a routerLink="/panelEspecialista" class="btn especialista">
+          <a routerLink="/panelEspecialista" class="btn especialista" (click)="NavegarPanelEspecialista()">
             <strong> 🩺 Panel Especialista</strong></a>
         </li>
 

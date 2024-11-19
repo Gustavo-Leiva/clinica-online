@@ -1,16 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { AuthService } from '../../../services/auth.service';
 import { FirebaseError } from 'firebase/app';
 import { HeaderComponent } from "../../header/header.component";  // Asegúrate de importar FirebaseError si usas Firebase
+import { RecaptchaModule } from 'ng-recaptcha';
 /*importante si necesito trabajar con imagenes deberia poder subir a storage service */
 
 @Component({
   selector: 'app-registro-paciente',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, HeaderComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, HeaderComponent, RecaptchaModule],
   templateUrl: './registro-paciente.component.html',
   styleUrl: './registro-paciente.component.css'
 })
@@ -23,6 +24,7 @@ export class RegistroPacienteComponent implements OnInit {
   submitted: boolean = false;
   msjError: string = '';
   flagError: boolean = false;
+  captchaResolved = signal(false);  // Usamos signal para almacenar el estado
   
 
 
@@ -49,6 +51,16 @@ export class RegistroPacienteComponent implements OnInit {
 
   
 
+   // Este método se ejecuta cuando el usuario resuelve el captcha
+   onCaptchaResolved(response: string | null): void {
+    if (response) {
+      this.captchaResolved.set(true);  // Cambia el estado del captcha a resuelto
+    } else {
+      this.captchaResolved.set(false); // Si no se resuelve el captcha, aseguramos que el estado sea falso
+    }
+  }
+  
+
   onFileSelect(event: any, perfil: number) {
     const file = event.target.files[0]; // Obtener el archivo seleccionado
     if (file) {
@@ -66,6 +78,12 @@ export class RegistroPacienteComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+
+      // Verificar si el captcha está resuelto
+    if (!this.captchaResolved()) {
+    console.log("Por favor, resuelve el captcha.");
+    return; // Detener el submit si el captcha no está resuelto
+   }
   
     // Verificamos si todos los campos son válidos y las imágenes están cargadas
     if (this.registroPacienteForm.valid && this.imagenPerfil1 && this.imagenPerfil2) {
