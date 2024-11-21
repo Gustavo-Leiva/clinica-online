@@ -1,27 +1,49 @@
 # ClinicaOnline
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.8.
+**ClinicaOnline** es una aplicación web desarrollada en Angular para gestionar turnos médicos, visualizar estadísticas y generar informes de los turnos según especialidades y días. El proyecto permite a los usuarios acceder a la clínica en línea y gestionar sus turnos, visualizando gráficos interactivos y descargando informes en formato PDF.
 
-## Development server
+## Pantallas
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+1. **Pantalla de Inicio (Home)**: Es la pantalla principal donde los usuarios pueden ver una barra de navegación con opciones como "Home", "Informes", "Quién Soy", y los botones de "Iniciar Sesión" y "Registrarse".
+   
+2. **Pantalla de Informes**: Los informes de turnos por especialidad y por día están disponibles aquí. Los usuarios pueden ver gráficos interactivos generados con **Highcharts** y descargarlos como archivos PDF.
+   
+3. **Pantalla de Login**: Esta pantalla permite a los usuarios registrarse o iniciar sesión en la aplicación para poder acceder a las funciones completas.
 
-## Code scaffolding
+4. **Pantalla de Quién Soy**: Una sección que muestra información personal del desarrollador del proyecto, incluyendo una breve biografía y una foto.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Tecnologías Utilizadas
 
-## Build
+- **Angular**: Framework principal utilizado para el desarrollo del frontend.
+- **Firebase**: Para la autenticación de usuarios y la base de datos.
+- **Highcharts**: Biblioteca para la creación de gráficos interactivos.
+- **html2canvas**: Para convertir los gráficos en imágenes y exportarlas a PDF.
+- **PrimeNG/Bootstrap/Angular Material**: Utilizado para el diseño y la interfaz de usuario.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Cómo acceder a las diferentes secciones
 
-## Running unit tests
+1. **Pantalla Principal (Home)**:
+   - Al acceder a la aplicación, se presentará la pantalla principal con los botones de **Iniciar Sesión** y **Registrarse**.
+   - ![image](https://github.com/user-attachments/assets/c167cddc-01d5-4e38-bfb5-69c3c3e23531)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+   
+2. **Informes**:
+   - Los informes pueden ser consultados desde la opción **Informes** en la barra de navegación. Esta sección muestra dos tipos de gráficos:
+     - **Gráfico de Turnos por Especialidad**: Muestra la cantidad de turnos asignados a cada especialidad médica.
+     - **Gráfico de Turnos por Día**: Muestra la cantidad de turnos asignados por día de la semana.
+   - Además, desde esta sección puedes descargar los informes en formato PDF.
 
-## Running end-to-end tests
+3. **Login**:
+   - Si no estás logueado, puedes acceder a la opción de **Iniciar Sesión** o **Registrarse** desde la barra de navegación. Una vez autenticado, podrás acceder a todas las secciones.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+4. **Quién Soy**:
+   - La opción **Quién Soy** en la barra de navegación muestra información sobre el desarrollador del proyecto.
 
-## Further help
+## Instrucciones de Ejecución
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Para ejecutar el proyecto localmente, sigue estos pasos:
+
+1. **Clonar el repositorio**:
+   ```bash
+   git clone https://github.com/tuusuario/clinicaonline.git
+
