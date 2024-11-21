@@ -158,13 +158,13 @@ export class PerfilComponent implements OnInit {
   
     // Agregar el logo
     const logoImg = new Image();
-    logoImg.src = "/assets/images/logo.png";
+    logoImg.src = "/assets/imagenes/logo.jfif";
   
     pdf.addImage(logoImg, 'PNG', 10, 10, 30, 30);
   
     // Agregar el título
     pdf.setFontSize(16);
-    pdf.text('Obra Social Personal Informatica', 50, 20); // Ajusta la posición y el nombre de tu clínica
+    pdf.text('Obra Social Clinica Salud', 50, 20); // Ajusta la posición y el nombre de tu clínica
   
     pdf.setFontSize(14);
     pdf.text("Historia Clinica", 10, 50);

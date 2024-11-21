@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Turno } from '../interfaces/Turno';
 import { AuthService } from '../../services/auth.service';
 import { Usuario, Paciente, Administrador, Especialista } from '../interfaces/Usuario';
@@ -10,6 +10,11 @@ import { ExpandirHoverDirective } from '../../directivas/expandir-hover.directiv
 import {animations} from '../../animations/animations';
 import Swal from 'sweetalert2';
 import { HoraFormatoPipe } from '../../pipes/hora-formato.pipe';
+import { FormsModule } from '@angular/forms';
+import { EstadoTurnoPipe } from '../../pipes/estado-turno.pipe';
+import { ResaltarFilaDirective } from '../../directivas/resaltar-fila.directive';
+import { ImagenDefaultDirective } from '../../directivas/imagen-default.directive';
+import { ResaltarElementoDirective } from '../../directivas/resaltar-elemento.directive';
 
 
 
@@ -21,7 +26,15 @@ interface Especialidad {
 @Component({
   selector: 'app-panel-paciente',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, ExpandirHoverDirective, HoraFormatoPipe ],
+  imports: [CommonModule, 
+            FormsModule, 
+            HeaderComponent, 
+            ExpandirHoverDirective,
+            ResaltarFilaDirective,
+            ImagenDefaultDirective,
+            ResaltarElementoDirective, 
+            HoraFormatoPipe, 
+            EstadoTurnoPipe ],
   templateUrl: './panel-paciente.component.html',
   styleUrl: './panel-paciente.component.css',
   animations:[animations.deslizarAbajo]
@@ -41,7 +54,7 @@ export class PanelPacienteComponent implements OnInit{
     { nombre: 'Traumatología', imagen: '/assets/imagenes/especialidades/traumatologo.jpg' },
     { nombre: 'Oftalmología', imagen: '/assets/imagenes/especialidades/oftalmologo.png' },
     { nombre: 'Endocrinología', imagen: '/assets/imagenes/especialidades/default-image.png' },
-
+    { nombre: 'Clinico', imagen: '/assets/imagenes/especialidades/clinico.jpg' },
 
     // 'Cardiología',
     // 'Dermatología',
@@ -56,6 +69,7 @@ export class PanelPacienteComponent implements OnInit{
 
   ];
 
+  @Input() mostrarHeader: boolean = true; // Mostrar header por defecto
   doctores: any[] = [];
   fechas:string[] = [];
   arrayHorarios: { horario: string; estado: string }[] = [];
@@ -135,14 +149,14 @@ export class PanelPacienteComponent implements OnInit{
 
 
   cargarProximosTurnos() {
-    if (this.usuarioLogueado?.tipoUsuario == "Paciente") {
+    if (this.usuarioLogueado?.tipoUsuario == "paciente") {
       this.turnosService.getProximosTurnos(this.usuarioLogueado.dni.toString())
         .subscribe(turnos => {
           this.proximosTurnos = turnos.filter(turno => 
             this.concatenatedFields(turno).toLowerCase().includes(this.filtroFull.toLowerCase())
           );
         });
-      }else if (this.usuarioLogueado?.tipoUsuario == "Admin"){
+      }else if (this.usuarioLogueado?.tipoUsuario == "administrador"){
         this.turnosService.getProximosTurnosFull()
         .subscribe(turnos => {
           this.proximosTurnos = turnos.filter(turno => 
@@ -154,14 +168,14 @@ export class PanelPacienteComponent implements OnInit{
 
 
   cargarHistorialClinico() {
-    if (this.usuarioLogueado?.tipoUsuario == "Paciente") {
+    if (this.usuarioLogueado?.tipoUsuario == "paciente") {
       this.turnosService.getHistoriaClinica(this.usuarioLogueado.dni.toString())
         .subscribe(historial => {
           this.historialClinico = historial.filter(turno => 
             this.concatenatedFields(turno).toLowerCase().includes(this.filtroFull.toLowerCase())
           );
         });
-    }else if (this.usuarioLogueado?.tipoUsuario == "Admin"){
+    }else if (this.usuarioLogueado?.tipoUsuario == "administrador"){
       this.turnosService.getHistoriaFull()
       .subscribe(historial => {
         this.historialClinico = historial.filter(turno => 
@@ -340,14 +354,14 @@ generarFechas(dniDoctorSeleccionado: string) {
         especialistaDni: this.dniDoctorSeleccionado.toString(),
         nombreDoctor: doctorSeleccionado.nombre, 
         apellidoDoctor: doctorSeleccionado.apellido,
-        pacienteDni: this.usuarioLogueado?.tipoUsuario === "Admin" ? this.pacienteSeleccionado.dni.toString() : this.usuarioLogueado?.dni.toString(),
+        pacienteDni: this.usuarioLogueado?.tipoUsuario === "administrador" ? this.pacienteSeleccionado.dni.toString() : this.usuarioLogueado?.dni.toString(),
         fecha: this.fechaSeleccionada,
         hora: hora,
         atendido: false,
         confirmacionDoctor: "Pendiente Confirmacion",
-        nombrePaciente: this.usuarioLogueado?.tipoUsuario === "Admin" ? this.pacienteSeleccionado.nombre : this.usuarioLogueado?.nombre,
-        apellidoPaciente: this.usuarioLogueado?.tipoUsuario === "Admin" ? this.pacienteSeleccionado.apellido : this.usuarioLogueado?.apellido,
-        edadPaciente: this.usuarioLogueado?.tipoUsuario === "Admin" ? this.pacienteSeleccionado.edad : this.usuarioLogueado?.edad,
+        nombrePaciente: this.usuarioLogueado?.tipoUsuario === "administrador" ? this.pacienteSeleccionado.nombre : this.usuarioLogueado?.nombre,
+        apellidoPaciente: this.usuarioLogueado?.tipoUsuario === "administrador" ? this.pacienteSeleccionado.apellido : this.usuarioLogueado?.apellido,
+        edadPaciente: this.usuarioLogueado?.tipoUsuario === "administrador" ? this.pacienteSeleccionado.edad : this.usuarioLogueado?.edad,
         // Aquí verificamos si 'usuarioLogueado' es un 'Paciente' antes de acceder a 'obraSocial'
         obraSocialPaciente: (this.usuarioLogueado as Paciente).obraSocial || ''
       };
@@ -374,9 +388,125 @@ generarFechas(dniDoctorSeleccionado: string) {
       })
     }
   }
+
+
+  verDetalle(turno: any) {
+    const { altura, datosDinamicos, peso, presion, temperatura } = turno.atencionDoc;
   
+    let mensaje = `
+      <p><strong>Altura:</strong> ${altura}</p>
+      <p><strong>Peso:</strong> ${peso}</p>
+      <p><strong>Presión:</strong> ${presion}</p>
+      <p><strong>Temperatura:</strong> ${temperatura}</p>
+    `;
+  
+    if (datosDinamicos && datosDinamicos.length > 0) {
+      mensaje += '<p> <strong>Datos Dinámicos:</strong></p><ul>';
+      datosDinamicos.forEach((dato: any) => {
+        mensaje += `<li>${dato.clave}: ${dato.valor}</li>`;
+      });
+      mensaje += '</ul>';
+    }
+  
+    Swal.fire({
+      title: "Reseña brindada por el doctor",
+      html: mensaje,
+      width: 600,
+      padding: "3em",
+      color: "#716add",
+      backdrop: `
+        rgba(0,0,123,0.4)
+        left top
+        no-repeat
+      `
+    });
+  }
 
   
+  
+
+  async cancelarTurno(turno: Turno) {
+    const result = await Swal.fire({
+      title: '¿Estás seguro de que deseas cancelar el turno?',
+      showDenyButton: true,
+      confirmButtonText: 'Sí',
+      denyButtonText: 'No'
+    });
+  
+    if (result.isConfirmed) {
+      try {
+        await this.turnosService.cancelarTurno(turno);
+        Swal.fire('¡Operación exitosa!', 'Turno cancelado con éxito.', 'success');
+      } catch (error) {
+        Swal.fire('Error', 'Ha ocurrido un error al cancelar el turno. Por favor, inténtalo de nuevo.', 'error');
+      }
+    } else if (result.isDenied) {
+      Swal.fire('Operación Cancelada', 'No se ha cancelado el turno.', 'info');
+    }
+  }
+
+  async calificarAtencion(turno: Turno) {
+    let calificacion = "";
+    let comentario = "";
+    const result = await Swal.fire({
+      title: 'Calificar Atención',
+      html: `
+        <p>Por favor, califica la atención:</p>
+        <select id="calificacion" class="swal2-input">
+          <option value="Espectacular">Espectacular</option>
+          <option value="Bien">Bien</option>
+          <option value="Conforme">Conforme</option>
+          <option value="Regular">Regular</option>
+          <option value="Mal">Mal</option>
+        </select>
+        <input id="comentario" class="swal2-input" placeholder="Deja tu comentario..." />
+      `,
+      showCancelButton: true,
+      confirmButtonText: 'Calificar',
+      cancelButtonText: 'Cancelar',
+      preConfirm: () => {
+        calificacion = (document.getElementById('calificacion') as HTMLSelectElement).value;
+        comentario = (document.getElementById('comentario') as HTMLInputElement).value;
+  
+        // Validaciones
+        if (!calificacion || !comentario) {
+          Swal.showValidationMessage('Por favor, completa tanto la calificación como el comentario.');
+        }
+        return { calificacion, comentario };
+      }
+    });
+  
+    if (result.isConfirmed) {
+  
+      try {
+        const calificacionConComentario = "⭐ Calificacion: " + calificacion + "💭 Comentario: " +  comentario;
+  
+        await this.turnosService.calificarTurno(turno, calificacionConComentario);
+        Swal.fire('¡Calificación exitosa!', 'Gracias por calificar la atención.', 'success');
+      } catch (error) {
+        console.log(error);
+        Swal.fire('Error', 'Ha ocurrido un error al calificar la atención. Por favor, inténtalo de nuevo.', 'error');
+      }
+    } else if (result.isDismissed) {
+      Swal.fire('Operación Cancelada', 'No se ha calificado la atención.', 'info');
+    }
+  }
+
+
+  verResenia(turno: Turno){
+    Swal.fire({
+      title: "Reseña del Paciente",
+      text: turno.calificacionPaciente,
+      width: 600,
+      padding: "3em",
+      color: "#716add",
+      backdrop: `
+        rgba(0,0,123,0.4)
+        left top
+        no-repeat
+      `
+    });
+  }
   // reservarTurno(hora: string) {
     
   //   const doctorSeleccionado = this.doctores.find(doctor => doctor.dni == this.dniDoctorSeleccionado);

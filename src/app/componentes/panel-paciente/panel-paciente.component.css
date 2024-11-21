@@ -26,17 +26,28 @@
     margin-bottom: 10px;
   }
 
+  label{
+
+   margin-top:2rem;
+  }
   /*Estilos para mostrar los PROFESIONALES en botones rectangulares con la imagen del mismo y su nombre por debajo del botón */
  /* Contenedor general para los botones */
-.botones-especialidades {
+.botones-especialidades,
+.botones-doctores,
+.botones-fechas,
+.botones-horarios {
   display: flex;
   flex-wrap: wrap; /* Permite que los botones se acomoden automáticamente si no hay espacio */
   gap: 1rem; /* Espaciado entre los botones */
-  justify-content: center; /* Centra los botones en el contenedor */
+  justify-content: left; /* Centra los botones en el contenedor */
+  gap: 15px; /* Espacio entre los botones */
 }
 
 /* Estilos para cada botón */
-.btn-especialidad {
+.btn-especialidad,
+.btn-doctores
+
+ {
   display: flex;
   flex-direction: column; /* Asegura que la imagen y el texto estén en vertical */
   align-items: center; /* Centra contenido dentro del botón */
@@ -51,15 +62,21 @@
   transition: all 0.3s ease; /* Animaciones suaves */
 }
 
-/* Hover: Cambia el borde y eleva el botón */
-.btn-especialidad:hover {
-  border: 2px solid #007bff; /* Borde azul */
-  transform: translateY(-5px); /* Eleva ligeramente */
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Más sombra */
+/* Hover: Cambia el borde y eleva el botón 
+.btn-especialidad:hover, 
+.btn-doctores:hover,
+.btn-fecha:hover,
+.btn-horario:hover {
+  border: 2px solid #007bff; Borde azul 
+  transform: translateY(-5px); /* Eleva ligeramente 
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Más sombra 
 }
 
 /* Estado seleccionado */
-.btn-especialidad.selected {
+.btn-especialidad.selected, 
+.btn-doctores.selected,
+.btn-fecha.selected,
+.btn-horario.selected {
   background-color: #007bff; /* Fondo azul */
   color: white; /* Texto blanco */
   border-color: #0056b3; /* Borde más oscuro */
@@ -67,15 +84,21 @@
 
 /* Contenedor de la imagen dentro del botón */
 .imagen-container {
-  width: 80px; /* Tamaño máximo de la imagen */
-  height: 80px;
-  overflow: hidden; /* Oculta cualquier parte de la imagen que se salga del contenedor */
-  border-radius: 50%; /* Hace la imagen circular */
-  background-color: #e9ecef; /* Fondo gris claro si la imagen no carga */
+  width: 100px; /* Ajusta según el diseño */
+  height: 100px;
+  overflow: hidden; /* Oculta cualquier parte que sobresalga */
   display: flex;
-  align-items: center;
   justify-content: center;
-  border-radius: 50%; /* Circular */
+  align-items: center;
+  border-radius: 50%; /* Para que la imagen sea redonda */
+  background-color: #f0f0f0; /* Color de fondo por defecto */
+}
+
+.imagen-doctores {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Hace que la imagen llene el contenedor manteniendo proporciones */
+  border-radius: 50%; /* Asegura que las imágenes también sean redondeadas */
 }
 
 /* Imagen dentro del botón */

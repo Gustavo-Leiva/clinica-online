@@ -19,14 +19,13 @@ export class RegistroEspecialistaComponent implements OnInit {
   especialidades: string[] = [
     'Cardiología',
     'Dermatología',
-    'Neurología',
-    'Pediatría',
+    'Endocrinología',
     'Ginecología',
-    'Oncología',
-    'Psiquiatría',
-    'Traumatología',
+    'Neurología',
     'Oftalmología',
-    'Endocrinología'
+    'Pediatría',
+    'Psiquiatría',
+    'Traumatología'
   ];
    // Especialidades predefinidas
   especialidadesDelMedico: string[] = []; // Especialidades asignadas al médico

@@ -1,8 +1,9 @@
+<app-header></app-header>
 <div class="container" style="margin-bottom: 450px;">
 
     <div class="row">
       <div class="col-md-4">
-        <div class="menu-option-card" (click)="this.mostrarAceptarRechazar = true; this.mostrarTurnos = false; this.mostrarPacientes = false; this.cargarTurnosPendientesAceptar();">
+        <div  class="menu-option-card" (click)="this.mostrarAceptarRechazar = true; this.mostrarTurnos = false; this.mostrarPacientes = false; this.cargarTurnosPendientesAceptar();">
           <div class="menu-option-content">
             <i class="fa-solid fa-gavel"></i>
             <h4>Aceptar/Rechazar Turnos</h4>
@@ -10,7 +11,7 @@
         </div>
       </div>
       <div class="col-md-4">
-        <div class="menu-option-card" (click)="this.mostrarAceptarRechazar = false; this.mostrarTurnos = true;this.mostrarPacientes = false; this.cargarTurnos()">
+        <div   class="menu-option-card" (click)="this.mostrarAceptarRechazar = false; this.mostrarTurnos = true;this.mostrarPacientes = false; this.cargarTurnos()">
           <div class="menu-option-content">
             <i class="fa-solid fa-calendar-days"></i>
             <h4>Listado Turnos</h4>
@@ -27,7 +28,7 @@
       </div>
     </div>
   
-    <div [@slideInTop] *ngIf="mostrarAceptarRechazar == false && mostrarTurnos == false && mostrarPacientes == true">
+    <div [@deslizarArriba]  *ngIf="mostrarAceptarRechazar == false && mostrarTurnos == false && mostrarPacientes == true">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 style="text-align: center;">Todos mis Pacientes 💗</h2>
       </div>
@@ -47,7 +48,7 @@
   
   
     <h1 *ngIf="mostrarAceptarRechazar == true && mostrarTurnos == false && mostrarPacientes == false">Aceptar ✅ - Rechazar ❌</h1>
-    <table [@slideInTop] class="table table-bordered" *ngIf="mostrarAceptarRechazar == true && mostrarTurnos == false  && mostrarPacientes == false">
+    <table [@deslizarArriba] class="table table-bordered" *ngIf="mostrarAceptarRechazar == true && mostrarTurnos == false  && mostrarPacientes == false">
       <thead>
         <tr>
           <th>Especialidad</th>
@@ -62,7 +63,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr appHighlightRow *ngFor="let turno of turnosPendientesAceptar">
+        <tr appResaltarFila *ngFor="let turno of turnosPendientesAceptar">
           <td>{{ turno.especialidad }}</td>
           <td>{{ turno.pacienteDni }}</td>
           <td>{{ turno.nombrePaciente }} {{ turno.apellidoPaciente }} </td>
@@ -80,7 +81,7 @@
     </table>
   
     <h1 *ngIf="mostrarAceptarRechazar == false && mostrarTurnos == true  && mostrarPacientes == false">Turnos 📑🥼</h1>
-    <div [@slideInTop] class="row" *ngIf="mostrarAceptarRechazar == false && mostrarTurnos == true  && mostrarPacientes == false">
+    <div [@deslizarArriba] class="row" *ngIf="mostrarAceptarRechazar == false && mostrarTurnos == true  && mostrarPacientes == false">
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
@@ -107,7 +108,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr appHighlightRow *ngFor="let turno of turnosDoctor">
+        <tr appResaltarFila *ngFor="let turno of turnosDoctor">
           <td>{{ turno.especialidad }}</td>
           <td>{{ turno.pacienteDni }}</td>
           <td>{{ turno.nombrePaciente }} {{ turno.apellidoPaciente }} </td>

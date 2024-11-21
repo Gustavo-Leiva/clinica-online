@@ -3,21 +3,24 @@ import { Turno } from '../interfaces/Turno';
 import { AuthService } from '../../services/auth.service';
 import { TurnosService } from '../../services/turnos.service';
 import Swal from 'sweetalert2';
-import { animations } from '../../animations/animations';
 import { UsuariosService } from '../../services/usuarios.service';
 import { Usuario,Especialista } from '../interfaces/Usuario';
 import { IconosUsuarioPipe } from '../../pipes/iconos-usuario.pipe';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { EstadoTurnoPipe } from '../../pipes/estado-turno.pipe';
+import { animations } from '../../animations/animations';
+import { ResaltarFilaDirective } from '../../directivas/resaltar-fila.directive';
+import { HeaderComponent } from "../header/header.component";
 
 
 @Component({
   selector: 'app-panel-especialista',
   standalone: true,
-  imports: [IconosUsuarioPipe,EstadoTurnoPipe, CommonModule, FormsModule],
+  imports: [IconosUsuarioPipe, EstadoTurnoPipe, CommonModule, FormsModule, ResaltarFilaDirective, HeaderComponent],
   templateUrl: './panel-especialista.component.html',
-  styleUrl: './panel-especialista.component.css'
+  styleUrl: './panel-especialista.component.css',
+  animations:[animations.deslizarArriba],
 })
 export class PanelEspecialistaComponent implements OnInit {
   
@@ -66,16 +69,30 @@ export class PanelEspecialistaComponent implements OnInit {
     }
   }
 
+  // cargarTurnos() {
+  //   if (this.usuarioLogueado) {
+  //     this.turnosService.getTurnosAceptadosByEspecialista(this.usuarioLogueado.dni.toString())
+  //       .subscribe(turnos => {
+  //         this.turnosDoctor = turnos.filter(turno => 
+  //           this.concatenatedFields(turno).toLowerCase().includes(this.filtroFull.toLowerCase())
+  //         );
+  //       });
+  //   }
+  // }
+
   cargarTurnos() {
     if (this.usuarioLogueado) {
       this.turnosService.getTurnosAceptadosByEspecialista(this.usuarioLogueado.dni.toString())
         .subscribe(turnos => {
+          console.log('Turnos antes de filtrar:', turnos); // Verificar datos iniciales
           this.turnosDoctor = turnos.filter(turno => 
             this.concatenatedFields(turno).toLowerCase().includes(this.filtroFull.toLowerCase())
           );
+          console.log('Turnos después de filtrar:', this.turnosDoctor); // Verificar datos filtrados
         });
     }
   }
+  
 
   concatenatedFields(turno: any): string {
     // Función auxiliar para asignar un valor predeterminado si es undefined o null

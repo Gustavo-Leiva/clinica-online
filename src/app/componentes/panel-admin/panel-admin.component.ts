@@ -24,6 +24,7 @@ import swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 import { IconosUsuarioPipe } from '../../pipes/iconos-usuario.pipe';
 import { animations } from '../../animations/animations';
+import { PanelPacienteComponent } from '../panel-paciente/panel-paciente.component';
 
 
 interface Especialidad {
@@ -35,10 +36,19 @@ interface Especialidad {
   selector: 'app-panel-admin',
   standalone: true,
   // imports: [CommonModule, HeaderComponent, IconosUsuarioPipe],
-  imports: [CommonModule, HeaderComponent, ExpandirHoverDirective, RegistroComponent, RegistroPacienteComponent, RegistroEspecialistaComponent, RegistroAdministradorComponent, ResaltarFilaDirective, IconosUsuarioPipe],
+  imports: [CommonModule, 
+            HeaderComponent, 
+            ExpandirHoverDirective, 
+            RegistroComponent, 
+            RegistroPacienteComponent, 
+            RegistroEspecialistaComponent, 
+            RegistroAdministradorComponent,
+            PanelPacienteComponent, 
+            ResaltarFilaDirective, 
+            IconosUsuarioPipe],
   templateUrl: './panel-admin.component.html',
   styleUrl: './panel-admin.component.css',
-  animations:[animations.deslizarAbajo, animations.escalaCentro, animations.deslizarArriba, animations.escalaCentro]
+  animations:[animations.deslizarAbajo, animations.escalaCentro, animations.deslizarArriba, animations.deslizarAbajo]
   
 })
 export class PanelAdminComponent implements OnInit {
@@ -170,7 +180,7 @@ export class PanelAdminComponent implements OnInit {
   }
 
   descargarDatos(usuario: Usuario) {
-    if (usuario.tipoUsuario === "Paciente") {
+    if (usuario.tipoUsuario === "paciente") {
       this.showSpinner = true;
   
       setTimeout(() => {

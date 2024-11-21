@@ -68,7 +68,7 @@
             <strong> 🧑 Mi Perfil</strong></a>
         </li> -->
         <li *ngIf="usuarioLogueado?.tipoUsuario === 'administrador'" appExpandirHover>
-          <a routerLink="/infomes" class="btn informes">
+          <a routerLink="/infomes" class="btn informes" (click)="NavegarInformes()">
             <strong> 📊 Informes</strong></a>
         </li>
         

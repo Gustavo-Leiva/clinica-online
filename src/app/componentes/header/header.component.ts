@@ -111,6 +111,11 @@ isEspecialista(usuario: Usuario): usuario is Especialista {
       NavegarHome() {
         this.router.navigate(['/home']); // Esto navega al componente de resultados
       }
+
+       // Método para navegar a un destino específico
+       NavegarInformes() {
+        this.router.navigate(['/informes']); // Esto navega al componente de resultados
+      }
 }
 
 

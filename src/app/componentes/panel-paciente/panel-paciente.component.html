@@ -1,4 +1,7 @@
-<app-header></app-header>
+<!-- <app-header></app-header> -->
+<div *ngIf="mostrarHeader">
+  <app-header></app-header>
+</div>
 
 <div class='container' style="margin-bottom: 50px;">
 
@@ -37,39 +40,44 @@
 
 
   <div class="content">
+
     
     <div [@deslizarAbajo] class="reservar-turno" *ngIf="mostrarReservarTurno">
       <div class="form-container">
         <h2>Reservar Turno</h2>
 
         <!-- Selección de Paciente -->
-        <!-- <div class="form-group" *ngIf="pacientes.length > 0 && this.usuarioLogueado?.tipoUsuario == 'Admin'">
+        <div class="form-group" *ngIf="pacientes.length > 0 && this.usuarioLogueado?.tipoUsuario == 'Admin'">
           <label for="doctor">Selecciona un Paciente:</label>
           <div class="botones-doctores">
-            <button appExpandirHover *ngFor="let paciente of pacientes" class="btn-doctores"
+            <button appResaltarElemento appExpandirHover *ngFor="let paciente of pacientes" class="btn-doctores"
               (click)="pacienteSeleccionado = paciente;"
               [ngClass]="{'selected': paciente.dni == pacienteSeleccionado.dni}"
               >
               <div class="imagen-container">
-                <img appDefaultImage [src]="paciente.fotoPerfil1" alt="{{paciente.nombre}}" class="imagen-doctores" />
+                <img appImagenDefault [src]="paciente.fotoPerfil1" alt="{{paciente.nombre}}" class="imagen-doctores" />
+                <!-- <img appImagenDefault src="https://example.com/imagen-inexistente.jpg" alt="Paciente" /> -->
+
               </div>
               <div class="texto-doctores">{{ paciente.nombre }} {{ paciente.apellido }}</div>
             </button>
           </div>
-        </div> -->
+        </div>
 
 
         <!-- Selección de Especialidad -->
         <div class="form-group">
           <label for="especialidad">Selecciona una especialidad:</label>
           <div class="botones-especialidades">
-            <button appExpandirHover *ngFor="let especialidad of especialidades" class="btn-especialidad"
+            <button appResaltarElemento appExpandirHover *ngFor="let especialidad of especialidades" class="btn-especialidad"
               (click)="especialidadSeleccionada = especialidad.nombre; cargarDoctores()"
               [ngClass]="{'selected': especialidad.nombre == especialidadSeleccionada}">
               <div class="imagen-container">
-                <img appDefaultImage [src]="especialidad.imagen" alt="{{especialidad.nombre}}"
+                <img appImagenDefault [src]="especialidad.imagen" alt="{{especialidad.nombre}}"
                   class="imagen-especialidad" />
-              </div>
+                 <!-- <img appImagenDefault src="https://example.com/imagen-inexistente.jpg" alt="especialista.nombre" /> -->
+
+                </div>
               <div class="texto-especialidad">{{ especialidad.nombre }}</div>
             </button>
           </div>
@@ -80,24 +88,24 @@
         <div [@deslizarAbajo] class="form-group" *ngIf="doctores && doctores.length > 0">
           <label for="doctor">Selecciona un doctor:</label>
           <div class="botones-doctores">
-            <button appExpandirHover *ngFor="let doctor of doctores" class="btn-doctores"
+            <button appResaltarElemento appExpandirHover *ngFor="let doctor of doctores" class="btn-doctores"
               (click)="dniDoctorSeleccionado = doctor.dni ?? ''; generarFechas(dniDoctorSeleccionado)"
               [ngClass]="{'selected': doctor.dni == dniDoctorSeleccionado}">
 
               <div class="imagen-container">
-                <img appDefaultImage [src]="doctor.fotoPerfil1" alt="{{doctor.nombre}}" class="imagen-doctores" />
+                <img appImagenDefault [src]="doctor.fotoPerfil1" alt="{{doctor.nombre}}" class="imagen-doctores" />
               </div>
               <div class="texto-doctores">{{ doctor.nombre }} {{ doctor.apellido }}</div>
             </button>
           </div>
         </div> 
  
-<!-- 
+
         <!-- Selección de Fecha -->
         <div [@deslizarAbajo]  class="form-group" *ngIf="dniDoctorSeleccionado">
           <label for="fecha">Selecciona una Fecha:</label>
           <div class="botones-fechas">
-            <button appExpandirHover *ngFor="let fecha of fechas" class="btn-fecha"
+            <button appResaltarElemento appExpandirHover *ngFor="let fecha of fechas" class="btn-fecha"
               (click)="this.fechaSeleccionada = fecha; this.cargarHorarios(this.dniDoctorSeleccionado,fecha)"
               [ngClass]="{'selected': fecha == fechaSeleccionada}">
               {{ fecha }}
@@ -110,7 +118,7 @@
         <div [@deslizarAbajo]  *ngIf="fechaSeleccionada">
           <label>Horarios Disponibles</label>
           <div class="botones-horarios">
-            <button appExpandOnHover *ngFor="let horario of arrayHorarios" class="btn-horario"
+            <button appExpandirHover *ngFor="let horario of arrayHorarios" class="btn-horario"
               [class.btn-success]="horario.estado == 'disponible'" [class.btn-danger]="horario.estado == 'ocupado'"
               [disabled]="horario.estado == 'ocupado'" (click)="reservarTurno(horario.horario)">
               <p>{{ horario.horario | horaFormato }}</p>
@@ -121,13 +129,84 @@
       </div>
     </div>
 
+    <div [@deslizarAbajo] class="proximos-turnos" *ngIf="mostrarProximosTurnos">
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="especialidadFiltro">Buscar por cualquier campo:</label>
+            <input class="form-control" type="text" [(ngModel)]="filtroFull" (input)="cargarProximosTurnos()">
+          </div>
+        </div>
+      </div>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Especialidad</th>
+            <th>Doctor</th>
+            <th>Confirmacion Doctor</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr appResaltarFila *ngFor="let turno of proximosTurnos">
+            <td>{{ turno.especialidad }}</td>
+            <td>{{ turno.nombreDoctor }} {{ turno.apellidoDoctor }} </td>
+            <td>{{ turno.confirmacionDoctor | estadoTurno }}</td>
+            <td>{{ turno.fecha }}</td>
+            <td>{{ turno.hora }}</td>
+            <td>
+              <button class="btn btn-danger" *ngIf="turno.confirmacionDoctor != 'Rechazado'" (click)="cancelarTurno(turno)">Cancelar Turno</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div [@deslizarAbajo] class="historial-clinico" *ngIf="mostrarHistorialClinico">
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="especialidadFiltro">Buscar por cualquier campo:</label>
+            <input class="form-control" type="text" [(ngModel)]="filtroFull" (input)="cargarHistorialClinico()">
+          </div>
+        </div>
+      </div>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Especialidad</th>
+            <th>Doctor</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr appResaltarFila *ngFor="let turno of historialClinico">
+            <td>{{ turno.especialidad }}</td>
+            <td>{{ turno.nombreDoctor }} {{ turno.apellidoDoctor }} </td>
+            <td>{{ turno.atendido ? 'Atendido ✅' : 'Pendiente de atencion ⌛' }}</td>
+            <td>{{ turno.fecha }}</td>
+            <td>{{ turno.hora }}</td>
+            <td>
+              <button class="btn btn-info" style="font-size: 12px;" *ngIf="turno.atencionDoc != null" (click)="verDetalle(turno)">Ver Reseña Doctor</button>
+              <button class="btn btn-success ms-2 mt-1" style="font-size: 12px;" *ngIf="turno.calificacionPaciente == null && this.usuarioLogueado?.tipoUsuario == 'paciente'" (click)="calificarAtencion(turno)">Calificar Atencion</button>
+              <button class="btn btn-success ms-2 mt-1" style="font-size: 12px;" *ngIf="turno.calificacionPaciente != null && this.usuarioLogueado?.tipoUsuario == 'administrador'" (click)="verResenia(turno)">Ver  Reseña Paciente</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
 
-
-
-
-
-
+  </div>
 
      
   

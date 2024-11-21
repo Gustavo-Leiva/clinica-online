@@ -215,5 +215,9 @@
 
 
   <div *ngIf="flagAdmin == true && mostrarRegistrarUsuarios == true && mostrarUsuarios == false && mostrarTurnos == false && mostrarAceptarEspecialistas == false" class="container">
-    <app-registro [@escalaCentro] [mostrarHeader]="false"></app-registro>     
+    <app-registro [@deslizarAbajo] [mostrarHeader]="false"></app-registro>     
+  </div>
+
+  <div *ngIf="flagAdmin == true && mostrarRegistrarUsuarios == false && mostrarUsuarios == false && mostrarTurnos == true && mostrarAceptarEspecialistas == false" class="container">
+    <app-panel-paciente [mostrarHeader]="false"></app-panel-paciente>
   </div>

@@ -25,10 +25,20 @@ export class TurnosService {
     return collectionData(turnosQuery) as Observable<Turno[]>;
   }
 
-  getTurnosAceptadosByEspecialista(dni?: string): Observable<Turno[]> {
-    const turnosRef = collection(this.firestore, 'turnos');
-    const turnosQuery = query(turnosRef, where('especialistaDni', '==', dni), where('confirmacionDoctor', 'in', ['Confirmado', 'Rechazado']));
-    return collectionData(turnosQuery) as Observable<Turno[]>;
+  // getTurnosAceptadosByEspecialista(dni?: string): Observable<Turno[]> {
+  //   const turnosRef = collection(this.firestore, 'turnos');
+  //   const turnosQuery = query(turnosRef, where('especialistaDni', '==', dni), where('confirmacionDoctor', 'in', ['Confirmado', 'Rechazado']));
+  //   return collectionData(turnosQuery) as Observable<Turno[]>;
+  // }
+
+  getTurnosAceptadosByEspecialista(dni?: string) {
+    const turnosRef = collection(this.firestore, 'turnos'); // Obtiene la referencia a la colección
+    const turnosQuery = query(
+      turnosRef,
+      where('especialistaDni', '==', dni),
+      where('confirmacionDoctor', 'in', ['Aceptado', 'Atendido'])
+    ); // Aplica los filtros
+    return collectionData(turnosQuery, { idField: 'id' }) as Observable<Turno[]>; // Devuelve los datos
   }
 
   getHistoriaClinica(dni: string): Observable<Turno[]> {
@@ -409,6 +419,8 @@ export class TurnosService {
       return 0; // En caso de error, retorna 0
     }
   }
+
+
 
 
 }

@@ -11,6 +11,7 @@ import { PanelAdminComponent } from './componentes/panel-admin/panel-admin.compo
 import { PanelPacienteComponent } from './componentes/panel-paciente/panel-paciente.component';
 import { PanelEspecialistaComponent } from './componentes/panel-especialista/panel-especialista.component';
 import { PerfilComponent } from './componentes/perfil/perfil.component';
+import { InformesComponent } from './componentes/informes/informes.component';
 import { adminGuard } from './guards/admin.guard'; // Asegúrate de que la ruta sea correcta
 import { GestionUsuariosComponent } from './componentes/gestion-usuarios/gestion-usuarios.component';
 
@@ -26,6 +27,7 @@ export const routes: Routes = [
     { path:  'panelAdmin', component: PanelAdminComponent },
     { path:  'panelPaciente', component: PanelPacienteComponent },
     { path:  'panelEspecialista', component: PanelEspecialistaComponent },
+    { path:  'informes', component: InformesComponent },
     { path:  'perfil', component: PerfilComponent },
     { path: 'error', component: ErrorComponent },
     { path: 'gestion-usuarios', component: GestionUsuariosComponent, canActivate: [adminGuard] }
