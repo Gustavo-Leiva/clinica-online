@@ -10,20 +10,18 @@
 
 3. **Pantalla de Quién Soy**: Una sección que muestra información personal del desarrollador del proyecto, incluyendo una breve biografía y una foto.
 
-
-
 4. **Panel de Paciente** permite a los usuarios gestionar sus turnos y acceder a su historial médico. Incluye:
 
-      5.1 **Reserva de Turnos**: Solicitar turnos con médicos de distintas especialidades.
-      5.2 **Mi Turno**: Verificar los turnos agendados.
-      5.3 Historia Clínica**: Consultar el historial médico del paciente.
+      4.1 **Reserva de Turnos**: Solicitar turnos con médicos de distintas especialidades.
+      4.2 **Mi Turno**: Verificar los turnos agendados.
+      4.3 Historia Clínica**: Consultar el historial médico del paciente.
 
 
 5. **El Panel de Especialista** permite a los médicos gestionar sus turnos y pacientes. Incluye:
 
-    6.1 **Aceptar/Rechazar Turnos:** El especialista puede aprobar o rechazar los turnos solicitados por los pacientes.
-    6.2 **Listado de Turnos:** Visualizar todos los turnos agendados para su especialidad.
-    6.3 **Pacientes: Acceder**  a la información y el historial de los pacientes asignados.
+    5.1 **Aceptar/Rechazar Turnos:** El especialista puede aprobar o rechazar los turnos solicitados por los pacientes.
+    5.2 **Listado de Turnos:** Visualizar todos los turnos agendados para su especialidad.
+    5.3 **Pacientes: Acceder**  a la información y el historial de los pacientes asignados.
 
 
 6. **Pantalla de Informes**: Los informes de turnos por especialidad y por día están disponibles aquí. Los usuarios pueden ver gráficos interactivos generados con **Highcharts** y descargarlos como archivos PDF.
@@ -78,14 +76,6 @@
 ![image](https://github.com/user-attachments/assets/c95ccf4b-1f17-4963-a37a-0b42e84f8a52)
 
 
-Reseña del especialista.
-![image](https://github.com/user-attachments/assets/70e76cf1-2056-4c22-ab2a-63cbde26976a)
-
-Calificación al especialista.
-![image](https://github.com/user-attachments/assets/8e79847d-265d-44f8-b34b-e4d6bdd632af)
-
-
-
 
 4. **Panel de Paciente** permite a los usuarios gestionar sus turnos y acceder a su historial médico. Incluye:
 
@@ -103,6 +93,14 @@ Calificación al especialista.
 ![image](https://github.com/user-attachments/assets/33a730dd-0d06-4b40-a6a7-86501115ee8b)
 
 ![image](https://github.com/user-attachments/assets/46f5a9c3-55a6-4bda-b909-b49f332346ef)
+
+
+
+Reseña del especialista.
+![image](https://github.com/user-attachments/assets/70e76cf1-2056-4c22-ab2a-63cbde26976a)
+
+Calificación al especialista.
+![image](https://github.com/user-attachments/assets/8e79847d-265d-44f8-b34b-e4d6bdd632af)
 
 
 
@@ -132,8 +130,6 @@ Calificación al especialista.
 
 Para ejecutar el proyecto localmente, sigue estos pasos:
 
-1. **Clonar el repositorio**:
-   ```bash
-   git clone https://github.com/tuusuario/clinicaonline.git
+Primero haz un git clone con la url del proyecto, luego parado en el primer nivel de la carpeta realiza npm i && ng serve tambien puedes hacerlo en dos pasos, primero npm i para instalar las dependencias y luego ng serve para levantar el proyecto.
 
 
