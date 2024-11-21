@@ -32,7 +32,7 @@
 - **Firebase**: Para la autenticación de usuarios y la base de datos.
 - **Highcharts**: Biblioteca para la creación de gráficos interactivos.
 - **html2canvas**: Para convertir los gráficos en imágenes y exportarlas a PDF.
-- **PrimeNG/Bootstrap/Angular Material**: Utilizado para el diseño y la interfaz de usuario.
+
 
 ## Cómo acceder a las diferentes secciones
 
